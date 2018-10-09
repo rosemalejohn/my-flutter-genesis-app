@@ -40,7 +40,7 @@ class ReviewCard extends StatelessWidget {
               child: Text('Review'),
               color: Colors.red,
               onPressed: () {
-
+                Navigator.pushNamed(context, '/do-review');
               }
             )
           ),
