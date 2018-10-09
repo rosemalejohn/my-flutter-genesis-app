@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'package:performancewave/widgets/avatar.dart';
 
-const List reviews = [
+class Review {
+  final String approved;
 
-];
+  Review({ this.approved });
+
+  factory Review.fromJson(Map<String, dynamic> json) {
+    return Review(
+      approved: json['approved'] as String
+    );
+  }
+}
 
 final Container reviewTabContent = Container(
   padding: const EdgeInsets.all(10.0),
@@ -21,24 +32,34 @@ class ReviewCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://instagram.fmnl7-1.fna.fbcdn.net/vp/40d89e25dd73e33fe1fa1310752dd7a4/5C3D1034/t51.2885-19/s150x150/41345116_756398848036768_6670657129260515328_n.jpg',
-              ),
-            ),
+            leading: WaveAvatar(height: 50.0, width: 50.0, url: 'https://avatars2.githubusercontent.com/u/1782201?s=400&v=4'),
             title: Text('John Delaney'),
-            subtitle: Text('Marketing Director')
-          ),
-          ButtonTheme.bar(
-            child: ButtonBar(
-              children: <Widget>[
-                FlatButton(
-                  child: Text('Review'),
-                  onPressed: () {
+            subtitle: Text('Marketing Director'),
+            trailing: FlatButton(
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+              child: Text('Review'),
+              color: Colors.red,
+              onPressed: () {
 
-                  }
-                )
-              ],
+              }
+            )
+          ),
+          Divider(),
+          ListTile(
+            leading: WaveAvatar(
+              height: 50.0,
+              width: 50.0,
+              url: 'https://avatars2.githubusercontent.com/u/483853?s=460&v=4'
+            ),
+            title: Text('Steve Jobs'),
+            subtitle: Text('Chief Operating Officer'),
+            trailing: FlatButton(
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+              child: Text('Review'),
+              color: Colors.amber,
+              onPressed: () {
+
+              }
             )
           )
         ],

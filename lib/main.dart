@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:performancewave/screens/index.dart';
+import 'package:performancewave/screens/doingreview/index.dart';
+import 'package:performancewave/screens/profile.dart';
+import 'package:performancewave/screens/setup_review.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,7 +23,14 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.amber,
       ),
-      home: MyHomePage(title: 'Home'),
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LandingPage(title: 'Home'),
+        '/do-review': (context) => DoingReview(),
+        '/profile': (context) => Profile(),
+        '/setup-review': (context) => SetupReview()
+      }
     );
   }
 }

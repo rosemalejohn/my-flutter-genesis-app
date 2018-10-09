@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:performancewave/presentations/app_drawer.dart';
-import 'package:performancewave/presentations/app_bar.dart';
+import 'package:performancewave/widgets/app_drawer.dart';
+import 'package:performancewave/widgets/tabs_app_bar.dart';
+import 'package:performancewave/widgets/notification_drawer.dart';
 // Tab contents
 import 'tabcontent/reviews.dart';
 import 'tabcontent/stats.dart';
 import 'tabcontent/rankings.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class LandingPage extends StatefulWidget {
+  LandingPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -24,7 +25,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<LandingPage> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -52,9 +53,10 @@ class _MyHomePageState extends State<MyHomePage> {
           appBar: PerformanceWaveAppBar(
             // Here we take the value from the MyHomePage object that was created by
             // the App.build method, and use it to set our appbar title.
-              title: Text(widget.title),
+            title: Text(widget.title),
           ),
-          drawer: appDrawer,
+          drawer: MainDrawer(),
+          endDrawer: NotificationDrawer(),
           body: TabBarView(
             children: <Widget>[
               reviewTabContent,

@@ -1,0 +1,18 @@
+import 'package:http/http.dart' as http;
+import 'dart:async';
+
+class PeoplewaveAPI extends http.BaseClient {
+  final String userAgent;
+
+  final http.Client _inner;
+
+  PeoplewaveAPI(this.userAgent, this._inner);
+
+  Future<http.StreamedResponse> send(http.BaseRequest request) {
+    request.headers['authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjNiOWExNDRjMjdlYzQwYzFkMzM2NjdmOTkxNjBiY2U3N2ExMmM2ZDFiOTJiZDA0YWIzZWQ2N2RhODRmY2E3NWZhMTViNjRhZTQ4ODNjZjQ5In0.eyJhdWQiOiIxIiwianRpIjoiM2I5YTE0NGMyN2VjNDBjMWQzMzY2N2Y5OTE2MGJjZTc3YTEyYzZkMWI5MmJkMDRhYjNlZDY3ZGE4NGZjYTc1ZmExNWI2NGFlNDg4M2NmNDkiLCJpYXQiOjE1MzgwMjU4MzcsIm5iZiI6MTUzODAyNTgzNywiZXhwIjoxNTY5NTYxODM3LCJzdWIiOiIzOSIsInNjb3BlcyI6W119.jQUp93vexkrNb3UmHzNxZLBwDgA4hpXX-1TLZmhPMkwaUpdwJY2Onhr_hmftD_QWWvaTFFNHIJiiqXkCI66pspnKmY6kSJLjp5k5RoG7wDdNIuAIrs0amBQQdxntT52h4MC1g-yl2DXtbp3ve7a-SNnw3legYGu9lYPq6YypP-GDe3B6cvbjZ2nsQpjYAvojEr5GsrOWs1NOXOgZ_JgXgIE-xKE13e40CZQNsKa0PbWMIttCBsbDfJ_JPHdZz-CdQCbABdJXOf8D8esWAQzZtVlGtS21TSt3CuAKvhb1iwWRxjk1kClWFb7pOgXOmhjkrEYUPJMZP-sk8YosflmXRgpKQpH3i_ORZX3xAnNA-IdOW810NKnFoWgDUqMeURpPDFTtwstkskZO2rsHGMQzDbHu-xBuj7KovuBgQOZXDGn4q5x-q-q9LSZkForbDGqd7zfafoXBZgqOlIfDPu-yGWbt2_gowx5e-IYtYbSQnRWthePNSEsAWWzHMxlCR6J-S7AuwN4wEv9jyIUnmuVxWHvdHYA6173mnI5TjhuZuxb8dGWow5l2_P0RElZl2dTMfj-37WZP5uASM0_cimqx_ke2gK8dBMWuk1CXvDhaInOb3Z-JoOsu-kysKQY682a2uKrnhbXOaw1B8_ioAxGY-BqoBZGqkuFr-godPyU2I6w';
+    request.headers['peoplewave-company-slug'] = 'peoplewave';
+    request.headers['x-requested-with'] = 'XMLHttpRequest';
+
+    return _inner.send(request);
+  }
+}
