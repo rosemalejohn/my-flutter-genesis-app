@@ -4,66 +4,63 @@ import 'package:http/http.dart' as http;
 import 'package:performancewave/widgets/avatar.dart';
 
 class Review {
-  final String approved;
+  final String name;
+  final String position;
+  final String avatar;
+  final String due;
 
-  Review({ this.approved });
-
-  factory Review.fromJson(Map<String, dynamic> json) {
-    return Review(
-      approved: json['approved'] as String
-    );
-  }
+  Review({this.name, this.position, this.avatar, this.due});
 }
 
-final Container reviewTabContent = Container(
-  padding: const EdgeInsets.all(10.0),
-  child: ListView(
-    children: <Widget>[
-      ReviewCard()
-    ],
+List<Review> _reviews = <Review>[
+  Review(
+    name: 'John Delaney',
+    position: 'Marketing Director',
+    avatar: 'https://avatars2.githubusercontent.com/u/1782201?s=400&v=4',
+    due: 'November 2018'
   ),
+];
+
+final ListView reviewTabContent = ListView.builder(
+  itemCount: _reviews.length,
+  itemBuilder: (context, index) {
+    return ReviewCard(review: _reviews[index]);
+  },
 );
 
 class ReviewCard extends StatelessWidget {
+  final Review review;
+
+  ReviewCard({this.review});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: WaveAvatar(height: 50.0, width: 50.0, url: 'https://avatars2.githubusercontent.com/u/1782201?s=400&v=4'),
-            title: Text('John Delaney'),
-            subtitle: Text('Marketing Director'),
-            trailing: FlatButton(
-              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-              child: Text('Review'),
-              color: Colors.red,
-              onPressed: () {
-                Navigator.pushNamed(context, '/do-review');
-              }
-            )
+    return Column(
+      children: <Widget>[
+        ListTile(
+          contentPadding: EdgeInsets.all(20.0),
+          leading: WaveAvatar(height: 70.0, width: 70.0, url: review.avatar),
+          title: Text('DUE ${review.due}'.toUpperCase(), style: TextStyle(color: Colors.amber)),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 5.0),
+              Text(review.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0, color: Color(0xff262626))),
+              SizedBox(height: 5.0,),
+              Text(review.position)
+            ],
           ),
-          Divider(),
-          ListTile(
-            leading: WaveAvatar(
-              height: 50.0,
-              width: 50.0,
-              url: 'https://avatars2.githubusercontent.com/u/483853?s=460&v=4'
-            ),
-            title: Text('Steve Jobs'),
-            subtitle: Text('Chief Operating Officer'),
-            trailing: FlatButton(
-              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-              child: Text('Review'),
-              color: Colors.amber,
-              onPressed: () {
-
-              }
-            )
+          trailing: FlatButton(
+            shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+            child: Text('Review'),
+            color: Colors.red,
+            onPressed: () {
+              Navigator.pushNamed(context, '/do-review');
+            }
           )
-        ],
-      )
+        ),
+        Divider(),
+      ],
     );
   }
 }

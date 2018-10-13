@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:performancewave/widgets/app_drawer.dart';
 import 'package:performancewave/widgets/app_bar.dart';
 import 'package:performancewave/widgets/avatar.dart';
+import 'package:performancewave/widgets/role_purpose.dart';
 
 class Profile extends StatelessWidget {
 
@@ -17,17 +18,16 @@ class Profile extends StatelessWidget {
       ),
       body: Center(
         child: (
-          Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: WaveAvatar(width: 100.0, height: 100.0, url: 'https://avatars0.githubusercontent.com/u/7259036?s=460&v=4'),
-              ),
-              Text('Matthew Carrol', style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w500)),
-              Text('Coder @ Github Inc.', style: TextStyle(fontSize: 18.0)),
-              Padding(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
-                child: Column(
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: <Widget>[
+                WaveAvatar(width: 100.0, height: 100.0, url: 'https://avatars0.githubusercontent.com/u/7259036?s=460&v=4'),
+                SizedBox(height: 10.0),
+                Text('Matthew Carrol', style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w500)),
+                Text('Coder @ Github Inc.', style: TextStyle(fontSize: 18.0)),
+                SizedBox(height: 20.0),
+                Column(
                   children: <Widget>[
                     Row(
                       children: <Widget>[
@@ -80,43 +80,11 @@ class Profile extends StatelessWidget {
                       ],
                     )
                   ],
-                )
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.circular(5.0),
                 ),
-                padding: EdgeInsets.all(20.0),
-                margin: EdgeInsets.all(20.0),
-                child: Center(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'ROLE PURPOSE',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white
-                        )
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: Text(
-                          '"To grow Peoplewave by setting strategy for people, marketing, sales and international expansion, while securing investment funds & commercial sales."',
-                          style: TextStyle(
-                            fontSize: 16.0
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Column(
+                SizedBox(height: 20.0),
+                WaveRolePurpose(),
+                SizedBox(height: 20.0),
+                Column(
                   children: <Widget>[
                     Row(
                       children: <Widget>[
@@ -194,9 +162,9 @@ class Profile extends StatelessWidget {
                       ],
                     )
                   ],
-                )
-              ),
-            ],
+                ),
+              ],
+            ),
           )
         ),
       ),

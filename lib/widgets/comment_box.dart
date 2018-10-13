@@ -6,7 +6,7 @@ class WaveCommentBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Icon(Icons.edit),
+        Icon(Icons.edit, color: Color(0xff9b9b9b),),
         SizedBox(
           width: 10.0,
         ),
@@ -15,6 +15,7 @@ class WaveCommentBox extends StatelessWidget {
             autocorrect: true,
             maxLines: 3,
             decoration: InputDecoration(
+              hintText: 'Add comment (optional)',
               border: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.amber,

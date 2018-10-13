@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:performancewave/widgets/avatar.dart';
+import 'package:performancewave/widgets/role_purpose.dart';
 
 final ListView profileTabContent = ListView(
   children: <Widget>[
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(
+    Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
             'Thank you for agreeing to review Phil Aldridge for the period of October 2018. Before we start here is Phil profile.',
             style: TextStyle(
               fontSize: 18.0,
@@ -16,60 +17,31 @@ final ListView profileTabContent = ListView(
               color: Color(0xff262626)
             ),
           ),
-        ),
-        Divider(),
-        Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: WaveAvatar(url: 'https://process.filestackapi.com/resize=width:85/CQ45xMlUSEuGdfzTyfvw', height: 100.0, width: 100.0),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text('PHIL ALDRIDGE', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 26.0)),
-                Divider(),
-                Text('Chief Technology Officer')
-              ],
-            )
-          ],
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.circular(5.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Divider(),
           ),
-          padding: EdgeInsets.all(20.0),
-          margin: EdgeInsets.all(20.0),
-          child: Column(
+          Row(
             children: <Widget>[
-              Text(
-                'ROLE PURPOSE',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white
-                )
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: Text(
-                  '"To grow Peoplewave by setting strategy for people, marketing, sales and international expansion, while securing investment funds & commercial sales."',
-                  style: TextStyle(
-                    fontSize: 16.0
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+              WaveAvatar(url: 'https://process.filestackapi.com/resize=width:85/CQ45xMlUSEuGdfzTyfvw', height: 100.0, width: 100.0),
+              SizedBox(width: 10.0,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text('PHIL ALDRIDGE', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 26.0)),
+                  SizedBox(height: 5.0),
+                  Text('Chief Technology Officer')
+                ],
               )
             ],
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: Text(
+          SizedBox(height: 20.0,),
+          WaveRolePurpose(),
+          SizedBox(height: 20.0,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
                 'DATE JOINED',
                 style: TextStyle(
                   color: Colors.amber, 
@@ -77,26 +49,21 @@ final ListView profileTabContent = ListView(
                   fontSize: 16.0
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
-              child: Text(
+              SizedBox(height: 10.0,),
+              Text(
                 'May 2017',
                 style: TextStyle(
                   fontWeight: FontWeight.w500, 
                   fontSize: 16.0
                 ),
               ),
-            ),
-          ],
-        ),
-        Divider(color: Colors.transparent,),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: Text(
+            ],
+          ),
+          SizedBox(height: 20.0,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
                 'DURATION OF WORK',
                 style: TextStyle(
                   color: Colors.amber, 
@@ -104,26 +71,21 @@ final ListView profileTabContent = ListView(
                   fontSize: 16.0
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
-              child: Text(
+              SizedBox(height: 10.0,),
+              Text(
                 '1 year and 5 months',
                 style: TextStyle(
                   fontWeight: FontWeight.w500, 
                   fontSize: 16.0
                 ),
               ),
-            ),
-          ],
-        ),
-        Divider(color: Colors.transparent,),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: Text(
+            ],
+          ),
+          SizedBox(height: 20.0,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
                 'STATUS',
                 style: TextStyle(
                   color: Colors.amber, 
@@ -131,20 +93,18 @@ final ListView profileTabContent = ListView(
                   fontSize: 16.0
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
-              child: Text(
+              SizedBox(height: 10.0,),
+              Text(
                 'Full-time',
                 style: TextStyle(
                   fontWeight: FontWeight.w500, 
                   fontSize: 16.0
                 ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     ),  
   ],
 );
