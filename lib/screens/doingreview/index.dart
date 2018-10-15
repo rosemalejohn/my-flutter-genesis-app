@@ -13,26 +13,22 @@ class DoingReview extends StatefulWidget {
   _DoingReviewState createState() => _DoingReviewState();
 }
 
-
 class _DoingReviewState extends State<DoingReview> with SingleTickerProviderStateMixin {
 
   TabController _tabController;
 
   int _tabInitialIndex;
 
-  final List<Widget> _tabs = <Widget>[
-    Tab(text: 'RELATIONSHIP', icon: Icon(Icons.album)),
-    Tab(text: 'SKILLS', icon: Icon(Icons.fiber_manual_record)),
-    Tab(text: 'PURPOSE', icon: Icon(Icons.fiber_manual_record)),
-    Tab(text: 'FIT', icon: Icon(Icons.fiber_manual_record)),
-    Tab(text: 'SUBMIT', icon: Icon(Icons.fiber_manual_record))
-  ];
-
   @override
   void initState() {
     super.initState();
     _tabInitialIndex = 0;
-    _tabController = TabController(initialIndex: _tabInitialIndex, length: _tabs.length, vsync: this);
+    _tabController = TabController(
+      initialIndex: _tabInitialIndex, 
+      length: 5, 
+      vsync: this
+    );
+    _tabController.addListener(_handleTabListener);
   }
 
   @override dispose() {
@@ -50,12 +46,21 @@ class _DoingReviewState extends State<DoingReview> with SingleTickerProviderStat
           title: Text('You are reviewing: Phil Aldridge'),
           bottom: TabBar(
             controller: _tabController,
-            tabs: _tabs,
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.black,
+            indicatorWeight: 4.0,
+            tabs: <Widget>[
+              Tab(text: 'RELATIONSHIP', icon: _handleTabIcon(0)),
+              Tab(text: 'SKILLS', icon: _handleTabIcon(1)),
+              Tab(text: 'PURPOSE', icon: _handleTabIcon(2)),
+              Tab(text: 'FIT', icon: _handleTabIcon(3)),
+              Tab(text: 'SUBMIT', icon: _handleTabIcon(4))
+            ],
           )
         ),
         body: TabBarView(
           controller: _tabController,
-          physics: const NeverScrollableScrollPhysics(),
+          // physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
             relationshipTabContent,
             skillsTabContent,
@@ -78,27 +83,60 @@ class _DoingReviewState extends State<DoingReview> with SingleTickerProviderStat
                 color: Colors.white,
                 icon: Icon(Icons.arrow_back_ios),
                 onPressed: () {
-                  _tabController.animateTo(_tabController.index - 1);
+                  if (_tabInitialIndex >= 0) {
+                    _tabController.animateTo(_tabInitialIndex - 1);
+                  } else {
+                    Navigator.pop(context);
+                  }
                 },
               ),
             ),
-            trailing: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                shape: BoxShape.circle
-              ),
-              child: IconButton(
-                color: Colors.white,
-                icon: Icon(Icons.arrow_forward_ios),
-                onPressed: () {
-                  _tabController.animateTo(_tabController.index + 1);
-                },
-              ),
-            ),
+            trailing: _handleSubmitButton()
           ),
           height: 60.0
         ),
       )
     );
+  }
+
+  void _handleTabListener() {
+    setState(() {
+      _tabInitialIndex = _tabController.index;
+    });
+  }
+
+  Icon _handleTabIcon(pageIndex) {
+    return (_tabInitialIndex == pageIndex) ? Icon(Icons.album, color: Colors.white,) : Icon(Icons.fiber_manual_record);
+  }
+
+  Widget _handleSubmitButton() {
+    if (_tabInitialIndex == 4) {
+      return FlatButton(
+        shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(30.0),
+        ),
+        child: Text("CONFIRM AND SUBMIT", style: TextStyle(fontSize: 16.0),),
+        color: Theme.of(context).primaryColor,
+        onPressed: () {
+          
+        }
+      );
+    } else {
+      return Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          shape: BoxShape.circle
+        ),
+        child: IconButton(
+          color: Colors.white,
+          icon: Icon(Icons.arrow_forward_ios),
+          onPressed: () {
+            if (_tabInitialIndex < 5) {
+              _tabController.animateTo(_tabInitialIndex + 1);
+            }
+          },
+        ),
+      );
+    }
   }
 }

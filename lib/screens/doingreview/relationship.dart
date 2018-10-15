@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:performancewave/widgets/comment_box.dart';
+import 'package:performancewave/widgets/like.dart';
 
 final PageView relationshipTabContent = PageView(
   scrollDirection: Axis.horizontal,
@@ -24,6 +25,8 @@ final ListView likable = ListView(
               color: Color(0xff262626)
             ),
           ),
+          SizedBox(height: 40.0,),
+          WaveLike(),
           SizedBox(height: 40.0,),
           WaveCommentBox()
         ],

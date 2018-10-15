@@ -131,33 +131,43 @@ ListView anonymousView(context) {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      WaveAvatar(url: 'https://process.filestackapi.com/resize=width:85/CQ45xMlUSEuGdfzTyfvw', height: 100.0, width: 100.0),
-                      SizedBox(height: 10.0),
-                      Text('YES', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10.0),
-                      Text('Review as anonymous person', style: TextStyle(fontSize: 16.0))
-                    ],
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        WaveAvatar(url: 'https://process.filestackapi.com/resize=width:85/CQ45xMlUSEuGdfzTyfvw', height: 100.0, width: 100.0),
+                        SizedBox(height: 10.0),
+                        Text('YES', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 10.0),
+                        Text('Review as anonymous person', style: TextStyle(fontSize: 16.0), textAlign: TextAlign.center,)
+                      ],
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/do-review');
-                        },
-                        child: WaveAvatar(url: 'https://process.filestackapi.com/resize=width:85/CQ45xMlUSEuGdfzTyfvw', height: 100.0, width: 100.0),
-                      ),
-                      SizedBox(height: 10.0),
-                      Text('NO', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10.0),
-                      Text('Review as Damien Cummings', style: TextStyle(fontSize: 16.0))
-                    ],
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/do-review');
+                          },
+                          child: WaveAvatar(url: 'https://process.filestackapi.com/resize=width:85/CQ45xMlUSEuGdfzTyfvw', height: 100.0, width: 100.0),
+                        ),
+                        SizedBox(height: 10.0),
+                        Text('NO', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 10.0),
+                        Text(
+                          'Review as Damien Cummings',
+                          style: TextStyle(
+                            fontSize: 16.0
+                          ),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -189,10 +199,37 @@ class _StartReviewState extends State<StartReview> {
   }
 
   void onPageChanged(int page) {
-    print(page);
     setState(() {
       this._defaultPage = page;
     });
+  }
+
+  Widget _buildBottomNavigationBar() {
+    if (_defaultPage == 0) {
+      return Container(
+        decoration: BoxDecoration(
+          border: Border(top: BorderSide(style: BorderStyle.solid, color: Color(0xffe4e4e4)))
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(10.0),
+          child: FlatButton(
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30.0),
+            ),
+            child: Text("Got it. Let's start!", style: TextStyle(fontSize: 16.0),),
+            color: Theme.of(context).primaryColor,
+            onPressed: () {
+              _pageController.nextPage(
+                duration: Duration(milliseconds: 100),
+                curve: Curves.easeIn
+              );
+            }
+          )
+        )
+      );
+    } else {
+      return null;
+    }
   }
 
   @override
@@ -213,28 +250,7 @@ class _StartReviewState extends State<StartReview> {
             anonymousView(context)
           ],
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            border: Border(top: BorderSide(style: BorderStyle.solid, color: Color(0xffe4e4e4)))
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(10.0),
-            child: FlatButton(
-              shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0),
-              ),
-              child: Text("Got it. Let's start!", style: TextStyle(fontSize: 16.0),),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                _pageController.nextPage(
-                  duration: Duration(milliseconds: 100),
-                  curve: Curves.easeIn
-                );
-              }
-            )
-          ),
-          height: 60.0
-        ),
+        bottomNavigationBar: _buildBottomNavigationBar(),
       )
     );
   }
