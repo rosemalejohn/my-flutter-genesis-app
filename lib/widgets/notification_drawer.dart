@@ -7,21 +7,204 @@ class NotificationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
+      child: Column(
         children: <Widget>[
-          ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.black12,
-              child: Text('RJ', style: TextStyle(color: Colors.white)),
+          Container(
+            decoration: BoxDecoration(
+              border: Border(bottom: BorderSide(style: BorderStyle.solid, color: Color(0xffe4e4e4))),
             ),
-            title: Text('Review Setup'),
-            subtitle: Text('Johnny setup his review for the month of October'),
-            onTap: () {
-              Navigator.pushNamed(context, '/');
-            }
+            child: AppBar(
+              title: Text('Notifications'),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.done_all),
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                )
+              ],
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.white,
+            )
           ),
-          Divider()
-        ]
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(0.0),
+              shrinkWrap: true,
+              children: <Widget>[
+                SizedBox(height: 10.0),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider(),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.black12,
+                    child: Text('RJ', style: TextStyle(color: Colors.white)),
+                  ),
+                  title: Text('Review Setup'),
+                  subtitle: Text('Johnny setup his review for the month of October'),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                Divider()
+              ]
+            ),
+          ),
+        ],
       )
     );
   }
