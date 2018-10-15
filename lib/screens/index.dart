@@ -7,8 +7,9 @@ import 'tabcontent/reviews.dart';
 import 'tabcontent/stats.dart';
 import 'tabcontent/rankings.dart';
 
-class LandingPage extends StatefulWidget {
-  LandingPage({Key key, this.title}) : super(key: key);
+class LandingPage extends StatelessWidget {
+
+  LandingPage({Key key, this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -20,24 +21,6 @@ class LandingPage extends StatefulWidget {
   // always marked "final".
 
   final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<LandingPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +36,7 @@ class _MyHomePageState extends State<LandingPage> {
           appBar: PerformanceWaveAppBar(
             // Here we take the value from the MyHomePage object that was created by
             // the App.build method, and use it to set our appbar title.
-            title: Text(widget.title),
+            title: Text(title),
           ),
           drawer: MainDrawer(),
           endDrawer: NotificationDrawer(),

@@ -18,7 +18,7 @@ class WaveCommentBox extends StatelessWidget {
               hintText: 'Add comment (optional)',
               border: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.amber,
+                  color: Theme.of(context).primaryColor,
                   width: 3.0
                 )
               )

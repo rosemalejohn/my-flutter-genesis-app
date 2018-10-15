@@ -44,7 +44,7 @@ class MainDrawer extends StatelessWidget {
         padding: const EdgeInsets.all(0.0),
         children: <Widget>[
           Container(
-            color: Color(0xfff2a727),
+            color: Theme.of(context).primaryColor,
             child: Column(
               children: <Widget>[
                 SizedBox(height: 25.0),

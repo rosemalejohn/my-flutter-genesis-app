@@ -40,7 +40,7 @@ class ReviewCard extends StatelessWidget {
         ListTile(
           contentPadding: EdgeInsets.all(20.0),
           leading: WaveAvatar(height: 70.0, width: 70.0, url: review.avatar),
-          title: Text('DUE ${review.due}'.toUpperCase(), style: TextStyle(color: Colors.amber)),
+          title: Text('DUE ${review.due}'.toUpperCase(), style: TextStyle(color: Theme.of(context).primaryColor)),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -55,7 +55,7 @@ class ReviewCard extends StatelessWidget {
             child: Text('Review'),
             color: Colors.red,
             onPressed: () {
-              Navigator.pushNamed(context, '/do-review');
+              Navigator.pushNamed(context, '/do-review/start');
             }
           )
         ),

@@ -6,7 +6,7 @@ class WaveRolePurpose extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.amber,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(5.0),
       ),
       padding: EdgeInsets.all(20.0),

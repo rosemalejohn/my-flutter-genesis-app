@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:performancewave/screens/doingreview/start.dart';
 import 'package:performancewave/screens/index.dart';
 import 'package:performancewave/screens/doingreview/index.dart';
 import 'package:performancewave/screens/profile.dart';
@@ -22,11 +23,14 @@ class MyApp extends StatelessWidget {
         // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.amber,
+        primaryColor: Color(0xffF2A727),
+        accentColor: Color(0xffffffff)
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => LandingPage(title: 'Home'),
+        '/do-review/start': (context) => StartReview(),
         '/do-review': (context) => DoingReview(),
         '/profile': (context) => Profile(),
         '/setup-review': (context) => SetupReview()

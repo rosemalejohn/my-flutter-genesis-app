@@ -23,7 +23,7 @@ class WaveAvatar extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: Colors.amber,
+          color: Theme.of(context).primaryColor,
           shape: BoxShape.circle
         ),
       )
