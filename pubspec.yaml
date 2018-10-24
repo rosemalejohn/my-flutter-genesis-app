@@ -44,6 +44,7 @@ flutter:
    - assets/images/gold-rank.png
    - assets/images/silver-rank.png
    - assets/images/bronze-rank.png
+   - assets/images/wave.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

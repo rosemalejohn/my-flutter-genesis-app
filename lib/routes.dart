@@ -1,7 +1,7 @@
 import 'package:performancewave/screens/doingreview/index.dart';
 import 'package:performancewave/screens/doingreview/start.dart';
 import 'package:performancewave/screens/index.dart';
-import 'package:performancewave/screens/profile.dart';
+import 'package:performancewave/screens/profile/index.dart';
 import 'package:performancewave/screens/ranking.dart';
 import 'package:performancewave/screens/setup_review.dart';
 
