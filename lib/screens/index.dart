@@ -31,30 +31,30 @@ class LandingPage extends StatelessWidget {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: PerformanceWaveAppBar(
-            // Here we take the value from the MyHomePage object that was created by
-            // the App.build method, and use it to set our appbar title.
-            title: Text(title),
-          ),
-          drawer: MainDrawer(),
-          endDrawer: NotificationDrawer(),
-          body: TabBarView(
-            children: <Widget>[
-              reviewTabContent,
-              statsTabContent,
-              rankingTabContent
-            ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/setup-review');
-            },
-            tooltip: 'Increment',
-            child: Icon(Icons.add),
-          ), // This trailing comma makes auto-formatting nicer for build methods.
-        )
+      length: 3,
+      child: Scaffold(
+        appBar: PerformanceWaveAppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(title),
+        ),
+        drawer: MainDrawer(),
+        endDrawer: NotificationDrawer(),
+        body: TabBarView(
+          children: <Widget>[
+            reviewTabContent,
+            statsTabContent,
+            rankingTabContent
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/setup-review');
+          },
+          tooltip: 'Increment',
+          child: Icon(Icons.add),
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+      )
     );
   }
 }

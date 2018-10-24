@@ -2,13 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:performancewave/widgets/comment_box.dart';
 import 'package:performancewave/widgets/like.dart';
 
-final PageView relationshipTabContent = PageView(
-  scrollDirection: Axis.horizontal,
-  children: <Widget>[
-    likable,
-    trustworthy
-  ],
-);
+class RelationshipTabContent extends StatefulWidget {
+
+  RelationshipTabContent({ Key key }) : super(key: key);
+
+  @override
+  _RelationshipTabContentState createState() => new _RelationshipTabContentState();
+}
+
+class _RelationshipTabContentState extends State<RelationshipTabContent> {
+
+  int _defaultPage = 0;
+  PageController pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController(initialPage: _defaultPage);
+  }
+
+  void onPageChanged(int page) {
+    setState(() {
+      this._defaultPage = page;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PageView(
+      controller: pageController,
+      onPageChanged: onPageChanged,
+      scrollDirection: Axis.horizontal,
+      children: <Widget>[
+        likable,
+        trustworthy
+      ],
+    );
+  }
+
+}
 
 final ListView likable = ListView(
   children: <Widget>[

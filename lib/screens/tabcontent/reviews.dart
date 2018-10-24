@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:performancewave/widgets/avatar.dart';
+import 'package:performancewave/widgets/button.dart';
 
 class Review {
   final String name;
@@ -50,13 +51,12 @@ class ReviewCard extends StatelessWidget {
               Text(review.position)
             ],
           ),
-          trailing: FlatButton(
-            shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-            child: Text('Review'),
+          trailing: WaveButton(
+            text: "Review",
             color: Colors.red,
             onPressed: () {
               Navigator.pushNamed(context, '/do-review/start');
-            }
+            },
           )
         ),
         Divider(),

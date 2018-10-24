@@ -127,7 +127,7 @@ class MainDrawer extends StatelessWidget {
             leading: Icon(Icons.format_list_numbered),
             title: Text('Ranking'),
             onTap: () {
-
+              Navigator.pushNamed(context, '/rankings');
             }
           ),
           Divider(),

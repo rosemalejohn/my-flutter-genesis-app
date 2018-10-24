@@ -4,6 +4,7 @@ import 'package:performancewave/screens/doingreview/relationship.dart';
 import 'package:performancewave/screens/doingreview/purpose.dart';
 import 'package:performancewave/screens/doingreview/skills.dart';
 import 'package:performancewave/screens/doingreview/submit.dart';
+import 'package:performancewave/widgets/button.dart';
 
 class DoingReview extends StatefulWidget {
 
@@ -62,11 +63,11 @@ class _DoingReviewState extends State<DoingReview> with SingleTickerProviderStat
           controller: _tabController,
           // physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
-            relationshipTabContent,
-            skillsTabContent,
-            purposeTabContent,
-            fitTabContent,
-            submitTabContent
+            RelationshipTabContent(),
+            SkillsTabContent(),
+            PurposeTabContent(),
+            FitTabContent(),
+            SubmitTabContent()
           ],
         ),
         bottomNavigationBar: Container(
@@ -111,15 +112,11 @@ class _DoingReviewState extends State<DoingReview> with SingleTickerProviderStat
 
   Widget _handleSubmitButton() {
     if (_tabInitialIndex == 4) {
-      return FlatButton(
-        shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(30.0),
-        ),
-        child: Text("CONFIRM AND SUBMIT", style: TextStyle(fontSize: 16.0),),
-        color: Theme.of(context).primaryColor,
+      return WaveButton(
+        text: "CONFIRM AND SUBMIT",
         onPressed: () {
-          
-        }
+          print('Nice one!');
+        },
       );
     } else {
       return Container(

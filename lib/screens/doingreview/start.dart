@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:performancewave/widgets/avatar.dart';
+import 'package:performancewave/widgets/button.dart';
 import 'package:performancewave/widgets/role_purpose.dart';
 
 ListView profileView(context) {
@@ -212,12 +213,8 @@ class _StartReviewState extends State<StartReview> {
         ),
         child: Container(
           padding: const EdgeInsets.all(10.0),
-          child: FlatButton(
-            shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30.0),
-            ),
-            child: Text("Got it. Let's start!", style: TextStyle(fontSize: 16.0),),
-            color: Theme.of(context).primaryColor,
+          child: WaveButton(
+            text: "Got it. Let's start!",
             onPressed: () {
               _pageController.nextPage(
                 duration: Duration(milliseconds: 100),

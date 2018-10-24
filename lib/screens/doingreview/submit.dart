@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-final ListView submitTabContent = ListView(
+class SubmitTabContent extends StatelessWidget {
 
+  SubmitTabContent();
 
-);
+  @override
+  Widget build(BuildContext context) {
+    return ListView();
+  }
+}

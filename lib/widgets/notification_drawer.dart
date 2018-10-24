@@ -9,23 +9,18 @@ class NotificationDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(style: BorderStyle.solid, color: Color(0xffe4e4e4))),
-            ),
-            child: AppBar(
-              title: Text('Notifications'),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.done_all),
-                  onPressed: () {
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                )
-              ],
-              automaticallyImplyLeading: false,
-              backgroundColor: Colors.white,
-            )
+          AppBar(
+            title: Text('Notifications'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.done_all),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              )
+            ],
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
           ),
           Expanded(
             child: ListView(

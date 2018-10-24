@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:performancewave/widgets/app_drawer.dart';
-import 'package:performancewave/widgets/app_bar.dart';
+import 'package:performancewave/layouts/singlepage.dart';
 import 'package:performancewave/widgets/avatar.dart';
 import 'package:performancewave/widgets/role_purpose.dart';
 
@@ -10,12 +9,8 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: MainDrawer(),
-      endDrawer: Drawer(),
-      appBar: PerformanceWaveAppBar(
-        title: Text('Profile')
-      ),
+    return SinglePage(
+      title: Text('Profile'),
       body: Center(
         child: (
           Padding(
