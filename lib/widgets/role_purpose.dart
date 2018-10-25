@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 class WaveRolePurpose extends StatelessWidget {
 
+  final String purpose;
+
+  WaveRolePurpose({ this.purpose });
+
   @override
   Widget build(BuildContext context) {
     return Container(

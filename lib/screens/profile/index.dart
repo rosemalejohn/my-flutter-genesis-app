@@ -48,11 +48,24 @@ class ProfileState extends State<Profile> {
               SliverAppBar(
                 centerTitle: true,
                 expandedHeight: 200.0,
-                floating: false,
                 pinned: true,
+                title: _showTitle ? Text('Damien Cummings', style: TextStyle(color: Colors.white)) : null,
+                actions: <Widget>[
+                  PopupMenuButton(
+                    icon: Icon(Icons.more_vert),
+                    itemBuilder: (BuildContext context) {
+                      return [
+                        PopupMenuItem(
+                          child: Text('Change password'),
+                        ),
+                        PopupMenuItem(
+                          child: Text('Edit profile'),
+                        )
+                      ];
+                    },
+                  ),
+                ],
                 flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: _showTitle ? Text('Damien Cummings', style: TextStyle(color: Colors.white)) : null,
                   background: Container(
                     color: Color(0xff262626),
                     child: Column(
@@ -75,8 +88,8 @@ class ProfileState extends State<Profile> {
                     labelColor: Theme.of(context).primaryColor,
                     unselectedLabelColor: Colors.grey,
                     tabs: [
-                      Tab(text: 'Work'),
-                      Tab(text: 'Contacts'),
+                      Tab(text: 'WORK'),
+                      Tab(text: 'CONTACTS'),
                     ],
                   ),
                 ),

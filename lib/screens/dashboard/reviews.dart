@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:http/http.dart' as http;
 import 'package:performancewave/widgets/avatar.dart';
 import 'package:performancewave/widgets/button.dart';
 
@@ -22,12 +20,17 @@ List<Review> _reviews = <Review>[
   ),
 ];
 
-final ListView reviewTabContent = ListView.builder(
-  itemCount: _reviews.length,
-  itemBuilder: (context, index) {
-    return ReviewCard(review: _reviews[index]);
-  },
-);
+class ReviewTabContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: _reviews.length,
+      itemBuilder: (context, index) {
+        return ReviewCard(review: _reviews[index]);
+      },
+    );
+  }
+}
 
 class ReviewCard extends StatelessWidget {
   final Review review;

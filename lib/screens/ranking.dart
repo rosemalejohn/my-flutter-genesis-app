@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:performancewave/layouts/singlepage.dart';
 import 'package:performancewave/widgets/avatar.dart';
+import 'package:performancewave/widgets/stat_filter.dart';
 
 class Rankings extends StatelessWidget {
 
@@ -16,49 +17,7 @@ class Rankings extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(
-                      'Stats for',
-                      style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500)
-                    ),
-                    SizedBox(width: 30.0,),
-                    Expanded(
-                      child: DropdownButton(
-                        items: <DropdownMenuItem>[
-                          DropdownMenuItem(
-                            child: Text('Yearly'),
-                          ),
-                          DropdownMenuItem(
-                            child: Text('Monthly'),
-                          ),
-                          DropdownMenuItem(
-                            child: Text('Quarterly'),
-                          )
-                        ],
-                        onChanged: (value) {
-                          
-                        }
-                      ),
-                    ),
-                    SizedBox(width: 10.0,),
-                    Expanded(
-                      child: DropdownButton(
-                        items: <DropdownMenuItem>[
-                          DropdownMenuItem(
-                            child: Text('2018'),
-                          ),
-                          DropdownMenuItem(
-                            child: Text('2017'),
-                          ),
-                        ],
-                        onChanged: (value) {
-                          
-                        }
-                      ),
-                    )
-                  ],
-                ),
+                WaveStatFilter(),
                 Center(
                   child: Text('89.0%', style: TextStyle(fontSize: 70.0))
                 ),
@@ -128,7 +87,7 @@ class WaveTopRank extends StatelessWidget {
             SizedBox(height: 30.0,),
             Text(
               employee.name, 
-              style: TextStyle(fontSize: 20.0),
+              style: TextStyle(fontSize: 18.0),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10.0,),
@@ -141,7 +100,6 @@ class WaveTopRank extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Row(
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   child: Row(

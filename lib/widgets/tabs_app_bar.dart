@@ -22,11 +22,11 @@ class PerformanceWaveAppBar extends StatelessWidget implements PreferredSizeWidg
         )
       ],
       bottom: TabBar(
+        labelColor: Colors.white,
         indicatorWeight: 4.0,
         tabs: <Widget>[
           Tab(text: 'REVIEWS'),
-          Tab(text: 'STATS'),
-          Tab(text: 'RANKINGS')
+          Tab(text: 'YOUR STATS'),
         ],
       )
     );

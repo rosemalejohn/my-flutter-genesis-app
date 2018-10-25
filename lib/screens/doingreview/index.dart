@@ -48,7 +48,6 @@ class _DoingReviewState extends State<DoingReview> with SingleTickerProviderStat
           bottom: TabBar(
             controller: _tabController,
             labelColor: Colors.white,
-            unselectedLabelColor: Colors.black,
             indicatorWeight: 4.0,
             tabs: <Widget>[
               Tab(text: 'RELATIONSHIP', icon: _handleTabIcon(0)),

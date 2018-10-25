@@ -10,7 +10,7 @@ class NotificationDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Notifications'),
+            title: Text('Notifications', style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.done_all),
