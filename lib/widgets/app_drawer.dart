@@ -94,14 +94,14 @@ class MainDrawer extends StatelessWidget {
                   leading: Icon(Icons.assignment_turned_in),
                   title: Text('Due review list'),
                   onTap: () {
-
+                    Navigator.pushNamed(context, '/');
                   }
                 ),
                 ListTile(
                     leading: Icon(Icons.format_list_numbered),
                     title: Text('View review setup'),
                     onTap: () {
-
+                      Navigator.pushNamed(context, '/review-setup');
                     }
                 ),
                 Divider(),
@@ -115,7 +115,7 @@ class MainDrawer extends StatelessWidget {
                   leading: Icon(Icons.trending_up),
                   title: Text('Your stats'),
                   onTap: () {
-
+                    Navigator.pushNamed(context, '/');
                   }
                 ),
                 ListTile(
@@ -137,7 +137,7 @@ class MainDrawer extends StatelessWidget {
                   leading: Icon(Icons.lock_open),
                   title: Text('Change Password'),
                   onTap: () {
-
+                    Navigator.pushNamed(context, '/change-password');
                   }
                 ),
               ],

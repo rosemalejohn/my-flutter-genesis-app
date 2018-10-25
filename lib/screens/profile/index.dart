@@ -56,7 +56,12 @@ class ProfileState extends State<Profile> {
                     itemBuilder: (BuildContext context) {
                       return [
                         PopupMenuItem(
-                          child: Text('Change password'),
+                          child: GestureDetector(
+                            child: Text('Change password'),
+                            onTap: () {
+                              Navigator.pushNamed(context, '/change-password');
+                            },
+                          ),
                         ),
                         PopupMenuItem(
                           child: Text('Edit profile'),
@@ -67,7 +72,13 @@ class ProfileState extends State<Profile> {
                 ],
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
-                    color: Color(0xff262626),
+                    decoration: BoxDecoration(
+                      color: Color(0xff262626),
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/wave.png'),
+                        // fit: BoxFit.cover,
+                      )
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
