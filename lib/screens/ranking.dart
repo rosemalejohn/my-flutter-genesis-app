@@ -4,9 +4,6 @@ import 'package:performancewave/widgets/avatar.dart';
 import 'package:performancewave/widgets/stat_filter.dart';
 
 class Rankings extends StatelessWidget {
-
-  Rankings();
-
   @override
   Widget build(BuildContext context) {
     return SinglePage(
@@ -247,20 +244,20 @@ List<Employee> _bottomRank = <Employee>[
     position: 'Marketing Director',
     avatar: 'https://cdn.filestackcontent.com/zd7iEvqTIC7uG0ux0fGW',
     rating: 89.8,
-    rank: 4
+    rank: 7
   ),
   Employee(
     name: 'Arthur Yap',
     position: 'Marketing Director',
     avatar: 'https://cdn.filestackcontent.com/i8PzI80PSg2RMwPVjMpg',
     rating: 89.3,
-    rank: 5
+    rank: 8
   ),
   Employee(
     name: 'Norbert Feria',
     position: 'Marketing Director',
     avatar: 'https://cdn.filestackcontent.com/uMxjSREQvaml1PnjxY1q',
     rating: 88.8,
-    rank: 6
+    rank: 9
   ),
 ];

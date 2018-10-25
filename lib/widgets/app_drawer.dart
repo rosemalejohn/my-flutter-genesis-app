@@ -122,7 +122,7 @@ class MainDrawer extends StatelessWidget {
                   leading: Icon(Icons.timeline),
                   title: Text('Team stats'),
                   onTap: () {
-
+                    Navigator.pushNamed(context, '/team-stats');
                   }
                 ),
                 ListTile(

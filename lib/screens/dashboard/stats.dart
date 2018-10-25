@@ -78,7 +78,8 @@ class StatsTabContent extends StatelessWidget {
             WaveStatDetailRow(title: 'Ready for promotion'),
             // Reviewers
             WaveStatTitleRow(title: 'REVIEWERS'),
-            SizedBox(height: 20.0,)
+            Divider(color: Theme.of(context).primaryColor),
+            SizedBox(height: 10.0,)
           ],
         )
       ],

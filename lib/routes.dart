@@ -5,6 +5,7 @@ import 'package:performancewave/screens/login.dart';
 import 'package:performancewave/screens/profile/index.dart';
 import 'package:performancewave/screens/ranking.dart';
 import 'package:performancewave/screens/setup_review.dart';
+import 'package:performancewave/screens/team_stats/index.dart';
 
 Object routes (context) {
   return {
@@ -14,6 +15,7 @@ Object routes (context) {
     '/do-review': (context) => DoingReview(),
     '/profile': (context) => Profile(),
     '/setup-review': (context) => SetupReview(),
-    '/rankings': (context) => Rankings()
+    '/rankings': (context) => Rankings(),
+    '/team-stats': (context) => TeamStats(),
   };
 }
