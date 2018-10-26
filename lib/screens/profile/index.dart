@@ -15,25 +15,10 @@ class ProfileState extends State<Profile> {
 
   ScrollController _scrollController;
 
-  bool _showTitle = false;
-
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(_handleScrollListener);
-  }
-
-  void _handleScrollListener() {
-    if (_scrollController.offset > 150) {
-      setState(() {
-        _showTitle = true;
-      });
-    } else {
-      setState(() {
-        _showTitle = false;
-      });
-    }
   }
 
   @override
@@ -49,7 +34,7 @@ class ProfileState extends State<Profile> {
                 centerTitle: true,
                 expandedHeight: 200.0,
                 pinned: true,
-                title: _showTitle ? Text('Damien Cummings', style: TextStyle(color: Colors.white)) : null,
+                title: _ProfileTitle(scrollController: _scrollController,),
                 actions: <Widget>[
                   PopupMenuButton(
                     icon: Icon(Icons.more_vert),
@@ -132,7 +117,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return new Material(
+    return Container(
       color: Colors.white,
       child: _tabBar,
     );
@@ -141,5 +126,45 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
     return false;
+  }
+}
+
+class _ProfileTitle extends StatefulWidget {
+
+  final ScrollController scrollController;
+
+  _ProfileTitle({ this.scrollController });
+
+  @override
+  _ProfileTitleState createState() {
+    return new _ProfileTitleState();
+  }
+}
+
+class _ProfileTitleState extends State<_ProfileTitle> {
+
+  bool _showTitle = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.scrollController.addListener(_handleScrollListener);
+  }
+
+  void _handleScrollListener() {
+    if (widget.scrollController.offset > 150 && !_showTitle) {
+      setState(() {
+        _showTitle = true;
+      });
+    } else if(_showTitle && widget.scrollController.offset < 150) {
+      setState(() {
+        _showTitle = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _showTitle ? Text('Damien Cummings', style: TextStyle(color: Colors.white)) : Container();
   }
 }

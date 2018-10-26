@@ -32,7 +32,7 @@ class Dashboard extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/setup-review');
+            Navigator.pushNamed(context, '/setup-review/start');
           },
           tooltip: 'Setup review',
           child: Icon(Icons.add),

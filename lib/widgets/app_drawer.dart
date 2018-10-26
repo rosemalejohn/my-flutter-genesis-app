@@ -87,7 +87,7 @@ class MainDrawer extends StatelessWidget {
                   leading: Icon(Icons.edit),
                   title: Text('Set up your next review'),
                   onTap: () {
-                    Navigator.pushNamed(context, '/setup-review');
+                    Navigator.pushNamed(context, '/setup-review/start');
                   }
                 ),
                 ListTile(

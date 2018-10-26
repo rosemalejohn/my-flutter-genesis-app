@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:performancewave/screens/review-setup/setup.dart';
+import 'package:performancewave/screens/review_setup/setup.dart';
 
 class SelfTab extends StatelessWidget {
   @override

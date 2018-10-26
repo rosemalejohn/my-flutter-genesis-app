@@ -18,6 +18,6 @@ ThemeData waveTheme = ThemeData(
   ),
   primaryIconTheme: IconThemeData(color: Colors.white),
   textTheme: TextTheme(
-    button: TextStyle(color: Colors.white)
+    button: TextStyle(color: Colors.white),
   ),
 );

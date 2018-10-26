@@ -20,7 +20,7 @@ class ChangePassword extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Divider(),
                 ),
                 Text(

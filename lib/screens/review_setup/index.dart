@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:performancewave/screens/review-setup/directs.dart';
-import 'package:performancewave/screens/review-setup/self.dart';
+import 'package:performancewave/screens/review_setup/directs.dart';
+import 'package:performancewave/screens/review_setup/self.dart';
 import 'package:performancewave/widgets/app_drawer.dart';
 import 'package:performancewave/widgets/notification_drawer.dart';
 

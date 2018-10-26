@@ -7,7 +7,7 @@ class StatsTabContent extends StatelessWidget {
     return ListView(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: Column(
             children: <Widget>[
               WaveStatFilter(),
