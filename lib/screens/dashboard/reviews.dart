@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:performancewave/models/review.dart';
+import 'package:performancewave/screens/doingreview/start.dart';
+import 'package:performancewave/store/app.dart';
 import 'package:performancewave/widgets/avatar.dart';
 import 'package:performancewave/widgets/button.dart';
-
-class Review {
-  final String name;
-  final String position;
-  final String avatar;
-  final String due;
-
-  Review({this.name, this.position, this.avatar, this.due});
-}
-
-List<Review> _reviews = <Review>[
-  Review(
-    name: 'John Delaney',
-    position: 'Marketing Director',
-    avatar: 'https://avatars2.githubusercontent.com/u/1782201?s=400&v=4',
-    due: 'November 2018'
-  ),
-];
+import 'package:scoped_model/scoped_model.dart';
 
 class ReviewTabContent extends StatelessWidget {
+
+  Future<dynamic> _getReviewList(BuildContext context) async {
+    return AppModel.of(context).getReviewList(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _reviews.length,
-      itemBuilder: (context, index) {
-        return ReviewCard(review: _reviews[index]);
-      },
+    _getReviewList(context);
+
+    return ScopedModelDescendant<AppModel>(
+      builder: (BuildContext context, child, model) {
+        return RefreshIndicator(
+          onRefresh: () {
+            return _getReviewList(context);
+          },
+          child: ListView.builder(
+            itemCount: model.reviews != null ? model.reviews.length : 0,
+            itemBuilder: (context, index) {
+              return ReviewCard(review: model.reviews[index]);
+            },
+          ),
+        ); 
+      }
     );
   }
 }
@@ -43,22 +45,32 @@ class ReviewCard extends StatelessWidget {
       children: <Widget>[
         ListTile(
           contentPadding: EdgeInsets.all(20.0),
-          leading: WaveAvatar(height: 70.0, width: 70.0, url: review.avatar),
-          title: Text('DUE ${review.due}'.toUpperCase(), style: TextStyle(color: Theme.of(context).primaryColor)),
+          leading: WaveAvatar(
+            height: 70.0,
+            width: 70.0,
+            url: review.reviewee.photoUrl,
+            borderColor: review.isOverdue ? Colors.red : null,
+          ),
+          title: Text(
+            review.isOverdue ? 'OVERDUE' : 'DUE ${review.due}'.toUpperCase(),
+            style: TextStyle(color: Theme.of(context).primaryColor)
+          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: 5.0),
-              Text(review.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0, color: Color(0xff262626))),
+              Text(review.reviewee.fullName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0, color: Color(0xff262626))),
               SizedBox(height: 5.0,),
-              Text(review.position)
+              Text(review.reviewee.title)
             ],
           ),
           trailing: WaveButton(
             text: "Review",
-            color: Colors.red,
+            color: review.isOverdue ? Colors.red : Theme.of(context).primaryColor,
             onPressed: () {
-              Navigator.pushNamed(context, '/do-review/start');
+              Navigator.push(context, MaterialPageRoute(
+                builder: (BuildContext context) => StartReview(reviewId: review.id,)
+              ));
             },
           )
         ),

@@ -26,7 +26,7 @@ class WaveRolePurpose extends StatelessWidget {
           ),
           SizedBox(height: 10.0,),
           Text(
-            '"To grow Peoplewave by setting strategy for people, marketing, sales and international expansion, while securing investment funds & commercial sales."',
+            purpose != null ? purpose : '"To grow Peoplewave by setting strategy for people, marketing, sales and international expansion, while securing investment funds & commercial sales."',
             style: TextStyle(
               fontSize: 16.0
             ),

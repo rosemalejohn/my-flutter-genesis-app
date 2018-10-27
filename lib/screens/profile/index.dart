@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:performancewave/models/team.dart';
+import 'package:performancewave/models/user.dart';
 import 'package:performancewave/screens/profile/contact.dart';
 import 'package:performancewave/screens/profile/work.dart';
+import 'package:performancewave/store/app.dart';
 import 'package:performancewave/widgets/avatar.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class Profile extends StatefulWidget {
 
@@ -23,84 +27,93 @@ class ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: DefaultTabController(
-        length: 2,
-        child: NestedScrollView(
-          controller: _scrollController,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                centerTitle: true,
-                expandedHeight: 200.0,
-                pinned: true,
-                title: _ProfileTitle(scrollController: _scrollController,),
-                actions: <Widget>[
-                  PopupMenuButton(
-                    icon: Icon(Icons.more_vert),
-                    itemBuilder: (BuildContext context) {
-                      return [
-                        PopupMenuItem(
-                          child: GestureDetector(
-                            child: Text('Change password'),
-                            onTap: () {
-                              Navigator.pushNamed(context, '/change-password');
-                            },
-                          ),
-                        ),
-                        PopupMenuItem(
-                          child: Text('Edit profile'),
-                        )
-                      ];
-                    },
-                  ),
-                ],
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xff262626),
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/wave.png'),
-                        // fit: BoxFit.cover,
-                      )
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        WaveAvatar(width: 80.0, height: 80.0, url: 'https://avatars0.githubusercontent.com/u/7259036?s=460&v=4'),
-                        SizedBox(height: 10.0),
-                        Text('Damien Cummings', style: TextStyle(fontSize: 20.0, color: Colors.white)),
-                        Text('Chief Executive Officer @ Peoplewave', style: TextStyle(fontSize: 16.0, color: Colors.white)),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SliverPersistentHeader(
-                delegate: _SliverAppBarDelegate(
-                  TabBar(
-                    indicatorColor: Theme.of(context).primaryColor,
-                    labelColor: Theme.of(context).primaryColor,
-                    unselectedLabelColor: Colors.grey,
-                    tabs: [
-                      Tab(text: 'WORK'),
-                      Tab(text: 'CONTACTS'),
+    return ScopedModelDescendant<AppModel>(
+      builder: (context, child, model) {
+        User _authProfile = model.authProfile;
+        Team _company = model.company;
+        return Scaffold(
+          body: DefaultTabController(
+            length: 2,
+            child: NestedScrollView(
+              controller: _scrollController,
+              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  SliverAppBar(
+                    centerTitle: true,
+                    expandedHeight: 200.0,
+                    pinned: true,
+                    title: _ProfileTitle(scrollController: _scrollController,),
+                    actions: <Widget>[
+                      PopupMenuButton(
+                        icon: Icon(Icons.more_vert),
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            PopupMenuItem(
+                              child: GestureDetector(
+                                child: Text('Change password'),
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/change-password');
+                                },
+                              ),
+                            ),
+                            PopupMenuItem(
+                              child: Text('Edit profile'),
+                            )
+                          ];
+                        },
+                      ),
                     ],
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xff262626),
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/wave.png'),
+                            // fit: BoxFit.cover,
+                          )
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            WaveAvatar(width: 80.0, height: 80.0, url: _authProfile.photoUrl),
+                            SizedBox(height: 10.0),
+                            Text(_authProfile.fullName, style: TextStyle(fontSize: 20.0, color: Colors.white)),
+                            Text(
+                              '${_authProfile.title} @ ${_company.name}',
+                              style: TextStyle(fontSize: 16.0, color: Colors.white)
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                pinned: true,
+                  SliverPersistentHeader(
+                    delegate: _SliverAppBarDelegate(
+                      TabBar(
+                        indicatorColor: Theme.of(context).primaryColor,
+                        labelColor: Theme.of(context).primaryColor,
+                        unselectedLabelColor: Colors.grey,
+                        tabs: [
+                          Tab(text: 'WORK'),
+                          Tab(text: 'CONTACTS'),
+                        ],
+                      ),
+                    ),
+                    pinned: true,
+                  ),
+                ];
+              },
+              body: TabBarView(
+                children: <Widget>[
+                  ProfileWork(),
+                  ProfileContact(),
+                ],
               ),
-            ];
-          },
-          body: TabBarView(
-            children: <Widget>[
-              ProfileWork(),
-              ProfileContact(),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      }
     );  
   }
 }

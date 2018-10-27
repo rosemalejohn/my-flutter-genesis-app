@@ -8,7 +8,14 @@ class WaveAvatar extends StatelessWidget {
 
   final String url;
 
-  WaveAvatar({@required this.width, @required this.height, @required this.url});
+  final Color borderColor;
+
+  WaveAvatar({
+    @required this.width, 
+    @required this.height, 
+    @required this.url,
+    this.borderColor
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +30,7 @@ class WaveAvatar extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: borderColor == null ? Theme.of(context).primaryColor : borderColor,
           shape: BoxShape.circle
         ),
       )

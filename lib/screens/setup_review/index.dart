@@ -41,7 +41,7 @@ class _SetupReviewState extends State<SetupReview> with SingleTickerProviderStat
           border: Border(top: BorderSide(style: BorderStyle.solid, color: Color(0xffe4e4e4)))
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 2.0),
           child: WaveButton(
             text: 'ALL SET',
             onPressed: () {
@@ -98,7 +98,6 @@ class _SetupReviewState extends State<SetupReview> with SingleTickerProviderStat
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: true,
           title: Text('Setup Review'),
           bottom: TabBar(
             controller: _tabController,

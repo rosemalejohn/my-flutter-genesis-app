@@ -25,7 +25,7 @@ class WaveProfileInfoRow extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            description,
+            description == null ? '' : description,
             textAlign: TextAlign.end,
             style: TextStyle(
               fontSize: 16.0,

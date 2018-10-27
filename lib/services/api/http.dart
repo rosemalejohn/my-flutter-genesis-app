@@ -1,18 +1,14 @@
-import 'package:http/http.dart' as http;
-import 'dart:async';
+import 'package:dio/dio.dart';
 
-class PeoplewaveAPI extends http.BaseClient {
-  final String userAgent;
+class Api extends Dio {
 
-  final http.Client _inner;
-
-  PeoplewaveAPI(this.userAgent, this._inner);
-
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
-    request.headers['authorization'] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjNiOWExNDRjMjdlYzQwYzFkMzM2NjdmOTkxNjBiY2U3N2ExMmM2ZDFiOTJiZDA0YWIzZWQ2N2RhODRmY2E3NWZhMTViNjRhZTQ4ODNjZjQ5In0.eyJhdWQiOiIxIiwianRpIjoiM2I5YTE0NGMyN2VjNDBjMWQzMzY2N2Y5OTE2MGJjZTc3YTEyYzZkMWI5MmJkMDRhYjNlZDY3ZGE4NGZjYTc1ZmExNWI2NGFlNDg4M2NmNDkiLCJpYXQiOjE1MzgwMjU4MzcsIm5iZiI6MTUzODAyNTgzNywiZXhwIjoxNTY5NTYxODM3LCJzdWIiOiIzOSIsInNjb3BlcyI6W119.jQUp93vexkrNb3UmHzNxZLBwDgA4hpXX-1TLZmhPMkwaUpdwJY2Onhr_hmftD_QWWvaTFFNHIJiiqXkCI66pspnKmY6kSJLjp5k5RoG7wDdNIuAIrs0amBQQdxntT52h4MC1g-yl2DXtbp3ve7a-SNnw3legYGu9lYPq6YypP-GDe3B6cvbjZ2nsQpjYAvojEr5GsrOWs1NOXOgZ_JgXgIE-xKE13e40CZQNsKa0PbWMIttCBsbDfJ_JPHdZz-CdQCbABdJXOf8D8esWAQzZtVlGtS21TSt3CuAKvhb1iwWRxjk1kClWFb7pOgXOmhjkrEYUPJMZP-sk8YosflmXRgpKQpH3i_ORZX3xAnNA-IdOW810NKnFoWgDUqMeURpPDFTtwstkskZO2rsHGMQzDbHu-xBuj7KovuBgQOZXDGn4q5x-q-q9LSZkForbDGqd7zfafoXBZgqOlIfDPu-yGWbt2_gowx5e-IYtYbSQnRWthePNSEsAWWzHMxlCR6J-S7AuwN4wEv9jyIUnmuVxWHvdHYA6173mnI5TjhuZuxb8dGWow5l2_P0RElZl2dTMfj-37WZP5uASM0_cimqx_ke2gK8dBMWuk1CXvDhaInOb3Z-JoOsu-kysKQY682a2uKrnhbXOaw1B8_ioAxGY-BqoBZGqkuFr-godPyU2I6w';
-    request.headers['peoplewave-company-slug'] = 'peoplewave';
-    request.headers['x-requested-with'] = 'XMLHttpRequest';
-
-    return _inner.send(request);
+  Api() {
+    this.options.baseUrl = 'https://api.alpha.peoplewave.co/v1';
+    this.options.headers = {
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRhN2NjN2FmMTQzZmQ0ODNkN2RhYzgzMzIxMWU2MTRkNDUzM2ZmMjJmMWVmZTZjMTkzNGU3NmEzODQyYTlmNDU1MDJiZjEzOTlkYzM0NTkxIn0.eyJhdWQiOiIxIiwianRpIjoiZGE3Y2M3YWYxNDNmZDQ4M2Q3ZGFjODMzMjExZTYxNGQ0NTMzZmYyMmYxZWZlNmMxOTM0ZTc2YTM4NDJhOWY0NTUwMmJmMTM5OWRjMzQ1OTEiLCJpYXQiOjE1NDAxNzkyMzIsIm5iZiI6MTU0MDE3OTIzMiwiZXhwIjoxNTcxNzE1MjMyLCJzdWIiOiIzOSIsInNjb3BlcyI6W119.JFEQRg_e7viz4Tg-oloUV83uB4EPuOnaOA1hT5qeHwZftBRXJo_cBvw-L_-sbTgeMTsQhNzfSYnpvRt3ul-AVMPddaCxb2EOgTTrUonDV9ziGoYvJswTMfZVniN7nNgs_b1_mEI3Poj-GH6iwxx0Zcb9JAf62BqtHow1L9ge14SH26RA7OS0FwaWT1GuiAUmQUkn6h3B6rw_IOPG8utx0udXRv71vyi87g53-b3hojB2XUROyXqeAmMolvHVy2iaGC4yl0fz76ym1qXsBNo7ZXWuloRdLDIDz6bPFzNL5T9xDJ5OIAt4umDQJCtsjTkfc5-RVsUHjq8jN441l7FOIQnQnx6KkV4K2mpjQIbVXCduBife3IXpbgS2l4go0FaMlcnzLeAUm_MaId_ykOkrRB_jWZStRPTYXxWUImk3U2Yt_SQJ8YTGu2zTgNAs17mtF-53qDXo761TYnylSDsoueZFKnhR8A-qXRG0_kzXUjxrdsflvHSf7fZNl71ldj3tFMj-0J0sMqaROPqcQ_gJbQQ1TujYb8RLb_CbbEbRfD_SUZ_MRjxhQ98y0K898m4dP-_qhFUlZuSqTCTcM3VrXDjzbjzkQWRNQPb0sxlmFqpZsfvc_O-_e17n5_YlzQZeKkSok-A8Y0djopEPPFa6jc_fiyvp5n11dPzH3eIEOFs',
+      'Peoplewave-Company-Slug': 'peoplewave',
+      'X-Requested-With': 'XMLHttpRequest'
+    };
   }
+
 }

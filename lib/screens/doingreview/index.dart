@@ -60,7 +60,6 @@ class _DoingReviewState extends State<DoingReview> with SingleTickerProviderStat
         ),
         body: TabBarView(
           controller: _tabController,
-          // physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
             RelationshipTabContent(),
             SkillsTabContent(),
