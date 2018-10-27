@@ -12,6 +12,19 @@ class ReviewTabContent extends StatelessWidget {
     return AppModel.of(context).getReviewList(context);
   }
 
+  Widget _buildContent(AppModel model) {
+    if (model.reviews == null) {
+      return Center(child: CircularProgressIndicator());
+    } else {
+      return ListView.builder(
+        itemCount: model.reviews.length,
+        itemBuilder: (context, index) {
+          return ReviewCard(review: model.reviews[index]);
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _getReviewList(context);
@@ -22,12 +35,7 @@ class ReviewTabContent extends StatelessWidget {
           onRefresh: () {
             return _getReviewList(context);
           },
-          child: ListView.builder(
-            itemCount: model.reviews != null ? model.reviews.length : 0,
-            itemBuilder: (context, index) {
-              return ReviewCard(review: model.reviews[index]);
-            },
-          ),
+          child: _buildContent(model),
         ); 
       }
     );

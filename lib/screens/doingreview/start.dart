@@ -261,9 +261,9 @@ class _StartReviewState extends State<StartReview> {
             return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
-                title: Text('You are reviewing: ${model.review.reviewee.fullName}'),
+                title: model.review == null ? Text('') : Text('You are reviewing: ${model.review.reviewee.fullName}'),
               ),
-              body: PageView(
+              body: model.review == null ? Center(child: CircularProgressIndicator()) : PageView(
                 physics: const NeverScrollableScrollPhysics(),
                 onPageChanged: onPageChanged,
                 controller: _pageController,
