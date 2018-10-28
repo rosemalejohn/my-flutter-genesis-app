@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class Api extends Dio {
 
@@ -9,6 +10,17 @@ class Api extends Dio {
       'Peoplewave-Company-Slug': 'peoplewave',
       'X-Requested-With': 'XMLHttpRequest'
     };
+    this.interceptor.response.onError = _onError;
+  }
+
+  DioError _onError (DioError e) {
+    Builder(builder: (BuildContext context) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(content: Text('Cannot complete request'),)
+      );
+    });
+
+    return e;
   }
 
 }

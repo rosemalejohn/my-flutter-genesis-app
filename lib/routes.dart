@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:performancewave/screens/change_password.dart';
 import 'package:performancewave/screens/dashboard/index.dart';
 import 'package:performancewave/screens/doingreview/index.dart';
@@ -10,18 +11,15 @@ import 'package:performancewave/screens/setup_review/index.dart';
 import 'package:performancewave/screens/setup_review/start.dart';
 import 'package:performancewave/screens/team_stats/index.dart';
 
-Object routes (context) {
-  return {
-    '/': (context) => Dashboard(),
-    '/login': (context) => Login(),
-    '/do-review/start': (context) => StartReview(),
-    '/do-review': (context) => DoingReview(),
-    '/profile': (context) => Profile(),
-    '/setup-review/start': (context) => StartReviewSetup(),
-    '/setup-review': (context) => SetupReview(),
-    '/rankings': (context) => Rankings(),
-    '/team-stats': (context) => TeamStats(),
-    '/review-setup': (context) => ReviewSetup(),
-    '/change-password': (context) => ChangePassword()
-  };
-}
+Map<String, WidgetBuilder> routes(BuildContext context) => {
+  '/dashboard': (context) => Dashboard(),
+  '/login': (context) => Login(),
+  '/do-review': (context) => DoingReview(),
+  '/profile': (context) => Profile(),
+  '/setup-review/start': (context) => StartReviewSetup(),
+  '/setup-review': (context) => SetupReview(),
+  '/rankings': (context) => Rankings(),
+  '/team-stats': (context) => TeamStats(),
+  '/review-setup': (context) => ReviewSetup(),
+  '/change-password': (context) => ChangePassword()
+};

@@ -51,7 +51,6 @@ class DashboardState extends State<Dashboard> with SingleTickerProviderStateMixi
         endDrawer: NotificationDrawer(),
         body: TabBarView(
           controller: _tabController,
-          physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
             ReviewTabContent(),
             StatsTabContent(),

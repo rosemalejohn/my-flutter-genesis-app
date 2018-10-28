@@ -49,15 +49,20 @@ class ProfileState extends State<Profile> {
                         itemBuilder: (BuildContext context) {
                           return [
                             PopupMenuItem(
-                              child: GestureDetector(
+                              child: FlatButton(
                                 child: Text('Change password'),
-                                onTap: () {
+                                onPressed: () {
                                   Navigator.pushNamed(context, '/change-password');
                                 },
-                              ),
+                              )
                             ),
                             PopupMenuItem(
-                              child: Text('Edit profile'),
+                              child: FlatButton(
+                                child: Text('Edit profile'),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/change-password');
+                                },
+                              )
                             )
                           ];
                         },

@@ -16,6 +16,8 @@ class AppModel extends Model {
   AppModel() {
     _http = Api();
   }
+
+  bool get isLoaded => _authProfile != null && _company != null;
   
   User get authProfile => _authProfile;
 
@@ -33,7 +35,7 @@ class AppModel extends Model {
     notifyListeners();
   }
 
-  void initApp(BuildContext context) async {
+  void initApp() async {
     final response = await _http.get('/performancewave-meta');
 
     if (response.statusCode == 200) {
@@ -46,7 +48,7 @@ class AppModel extends Model {
     }
   }
 
-  void getReviewList(BuildContext context) async {
+  void getReviewList() async {
     final response = await _http.get('/reviews');
 
     if (response.statusCode == 200) {

@@ -3,49 +3,66 @@ import 'package:performancewave/models/notification.dart';
 import 'package:performancewave/store/notification.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class NotificationDrawer extends StatelessWidget {
+class NotificationDrawer extends StatefulWidget {
 
   NotificationDrawer();
 
-  Widget _buildOtherNotifications(NotificationModel model) {
-    if (model.others == null) {
+  @override
+  NotificationDrawerState createState() {
+    return new NotificationDrawerState();
+  }
+}
+
+class NotificationDrawerState extends State<NotificationDrawer> {
+
+  NotificationModel _model;
+
+  @override
+  void initState() {
+    super.initState();
+    _model = NotificationModel();
+    _model.getNotification();
+  }
+
+  Widget _buildOtherNotifications() {
+    if (_model.others == null) {
       return Container();
     } else {
       return Column(
         children: <Widget>[
           _NotificationBoxTitle(title: 'past days',),
           Column(
-            children: model.others.toList().map((notification) => NotificationBox(notification: notification,)).toList()
+            children: _model.others.toList().map((notification) => NotificationBox(notification: notification,)).toList()
           ),
         ],
       );
     }
   }
 
-  Widget _buildYesterdayNotifications(NotificationModel model) {
-    if (model.yesterday == null) {
+  Widget _buildYesterdayNotifications() {
+    if (_model.yesterday == null) {
       return Container();
     } else {
       return Column(
         children: <Widget>[
           _NotificationBoxTitle(title: 'yesterday',),
           Column(
-            children: model.others.toList().map((notification) => NotificationBox(notification: notification,)).toList()
+            children: _model.others.toList().map((notification) => NotificationBox(notification: notification,)).toList()
           ),
         ],
       );
     }
   }
 
-  Widget _buildTodayNotifications(NotificationModel model) {
-    if (model.today == null) {
+  Widget _buildTodayNotifications() {
+    if (_model.today == null) {
       return Container();
     } else {
       return Column(
         children: <Widget>[
           _NotificationBoxTitle(title: 'today',),
           Column(
-            children: model.others.toList().map((notification) => NotificationBox(notification: notification,)).toList()
+            children: _model.others.toList().map((notification) => NotificationBox(notification: notification,)).toList()
           ),
         ],
       );
@@ -53,12 +70,9 @@ class NotificationDrawer extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    NotificationModel model = NotificationModel();
-    model.getNotification();
-
+  Widget build(BuildContext context) {  
     return ScopedModel<NotificationModel>(
-      model: model,
+      model: _model,
       child: Drawer(
         child: ScopedModelDescendant<NotificationModel>(
           builder: (BuildContext context, child, model) {
@@ -83,9 +97,9 @@ class NotificationDrawer extends StatelessWidget {
                     padding: const EdgeInsets.all(0.0),
                     shrinkWrap: true,
                     children: <Widget>[
-                      _buildTodayNotifications(model),
-                      _buildYesterdayNotifications(model),
-                      _buildOtherNotifications(model),
+                      _buildTodayNotifications(),
+                      _buildYesterdayNotifications(),
+                      _buildOtherNotifications(),
                     ]
                   ),
                 ),

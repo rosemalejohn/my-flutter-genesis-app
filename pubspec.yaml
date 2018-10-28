@@ -50,6 +50,7 @@ flutter:
    - assets/images/bronze-rank.png
    - assets/images/wave.png
    - assets/images/light-logo.png
+   - assets/images/logo-rounded.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -75,6 +76,7 @@ flutter:
         - asset: assets/fonts/Lato/Lato-Light.ttf
         - asset: assets/fonts/Lato/Lato-LightItalic.ttf
         - asset: assets/fonts/Lato/Lato-Regular.ttf
+        - style: normal
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages

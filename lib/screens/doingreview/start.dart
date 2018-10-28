@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:performancewave/store/app.dart';
 import 'package:performancewave/store/doingreview.dart';
 import 'package:performancewave/widgets/avatar.dart';
 import 'package:performancewave/widgets/button.dart';
@@ -6,11 +7,13 @@ import 'package:performancewave/widgets/role_purpose.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ProfileView extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<DoingReviewModel>(
       builder: (BuildContext context, child, model) {
+        if (model.review == null) {
+          return Center(child: CircularProgressIndicator());
+        }
         return ListView(
           children: <Widget>[
             Padding(
@@ -125,7 +128,6 @@ class ProfileView extends StatelessWidget {
 }
 
 class AnonymousView extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -152,7 +154,7 @@ class AnonymousView extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: <Widget>[
-                          WaveAvatar(url: 'https://process.filestackapi.com/resize=width:85/CQ45xMlUSEuGdfzTyfvw', height: 100.0, width: 100.0),
+                          WaveAvatar(url: '', height: 100.0, width: 100.0),
                           SizedBox(height: 10.0),
                           Text('YES', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
                           SizedBox(height: 10.0),
@@ -161,30 +163,34 @@ class AnonymousView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: <Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/do-review');
-                            },
-                            child: WaveAvatar(url: 'https://process.filestackapi.com/resize=width:85/CQ45xMlUSEuGdfzTyfvw', height: 100.0, width: 100.0),
+                  ScopedModelDescendant<AppModel>(
+                    builder: (BuildContext context, child, AppModel model) {
+                      return Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/do-review');
+                                },
+                                child: WaveAvatar(url: model.authProfile.photoUrl, height: 100.0, width: 100.0),
+                              ),
+                              SizedBox(height: 10.0),
+                              Text('NO', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
+                              SizedBox(height: 10.0),
+                              Text(
+                                'Review as ${model.authProfile.fullName}',
+                                style: TextStyle(
+                                  fontSize: 16.0
+                                ),
+                                textAlign: TextAlign.center,
+                              )
+                            ],
                           ),
-                          SizedBox(height: 10.0),
-                          Text('NO', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 10.0),
-                          Text(
-                            'Review as Damien Cummings',
-                            style: TextStyle(
-                              fontSize: 16.0
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    }
                   )
                 ],
               )
@@ -212,11 +218,14 @@ class _StartReviewState extends State<StartReview> {
 
   int _defaultPage = 0;
   PageController _pageController;
+  DoingReviewModel _model;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _defaultPage);
+    _model = DoingReviewModel();
+    _model.getReview(widget.reviewId);
   }
 
   void onPageChanged(int page) {
@@ -251,30 +260,31 @@ class _StartReviewState extends State<StartReview> {
 
   @override
   Widget build(BuildContext context) {
-    DoingReviewModel model = DoingReviewModel();
-    model.getReview(widget.reviewId);
-
     return ScopedModel<DoingReviewModel>(
-      model: model,
+      model: _model,
       child: DefaultTabController(
         length: 5,
         child: ScopedModelDescendant<DoingReviewModel>(
           builder: (BuildContext context, child, model) {
-            return Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                title: model.review == null ? Text('') : Text('You are reviewing: ${model.review.reviewee.fullName}'),
-              ),
-              body: model.review == null ? Center(child: CircularProgressIndicator()) : PageView(
-                physics: const NeverScrollableScrollPhysics(),
-                onPageChanged: onPageChanged,
-                controller: _pageController,
-                children: <Widget>[
-                  ProfileView(),
-                  AnonymousView()
-                ],
-              ),
-              bottomNavigationBar: _buildBottomNavigationBar(),
+            return Builder(
+              builder: (BuildContext context) {
+                return Scaffold(
+                  appBar: AppBar(
+                    centerTitle: true,
+                    title: model.review == null ? Text('') : Text('You are reviewing: ${model.review.reviewee.fullName}'),
+                  ),
+                  body: PageView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    onPageChanged: onPageChanged,
+                    controller: _pageController,
+                    children: <Widget>[
+                      ProfileView(),
+                      AnonymousView(),
+                    ],
+                  ),
+                  bottomNavigationBar: _buildBottomNavigationBar(),
+                );
+              }
             );
           },
         )

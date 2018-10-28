@@ -55,7 +55,7 @@ class MainDrawer extends StatelessWidget {
                     ListTile(
                       leading: CircleAvatar(
                         backgroundImage: NetworkImage(
-                          model.authProfile.photoUrl
+                          model.authProfile.photoUrl == null ? '' : model.authProfile.photoUrl
                         ),
                       ),
                       title: Text(model.authProfile.fullName, style: TextStyle(color: Colors.white),),
@@ -71,7 +71,7 @@ class MainDrawer extends StatelessWidget {
                       leading: Icon(Icons.dashboard),
                       title: Text('Dashboard'),
                       onTap: () {
-                        Navigator.pushNamed(context, '/');
+                        Navigator.pushNamed(context, '/dashboard');
                       }
                     ),
                     ListTile(
@@ -99,7 +99,7 @@ class MainDrawer extends StatelessWidget {
                       leading: Icon(Icons.assignment_turned_in),
                       title: Text('Due review list'),
                       onTap: () {
-                        Navigator.pushNamed(context, '/');
+                        Navigator.pushNamed(context, '/dashboard');
                       }
                     ),
                     ListTile(

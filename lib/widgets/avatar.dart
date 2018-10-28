@@ -24,7 +24,7 @@ class WaveAvatar extends StatelessWidget {
         padding: EdgeInsets.all(3.0),
         child: CircleAvatar(
           backgroundImage: NetworkImage(
-            url,
+            url == null ? '' : url,
           ),
         ),
         width: width,

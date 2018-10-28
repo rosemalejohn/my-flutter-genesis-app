@@ -9,7 +9,7 @@ import 'package:scoped_model/scoped_model.dart';
 class ReviewTabContent extends StatelessWidget {
 
   Future<dynamic> _getReviewList(BuildContext context) async {
-    return AppModel.of(context).getReviewList(context);
+    return AppModel.of(context).getReviewList();
   }
 
   Widget _buildContent(AppModel model) {
