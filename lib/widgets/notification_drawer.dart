@@ -24,45 +24,29 @@ class NotificationDrawerState extends State<NotificationDrawer> {
     _model.getNotification();
   }
 
-  Widget _buildOtherNotifications() {
-    if (_model.others == null) {
-      return Container();
-    } else {
-      return Column(
-        children: <Widget>[
-          _NotificationBoxTitle(title: 'past days',),
-          Column(
-            children: _model.others.toList().map((notification) => NotificationBox(notification: notification,)).toList()
-          ),
-        ],
-      );
-    }
-  }
+  Widget _buildNotifications(String type, [String title]) {
+    List<dynamic> _notifications;
 
-  Widget _buildYesterdayNotifications() {
-    if (_model.yesterday == null) {
-      return Container();
-    } else {
-      return Column(
-        children: <Widget>[
-          _NotificationBoxTitle(title: 'yesterday',),
-          Column(
-            children: _model.others.toList().map((notification) => NotificationBox(notification: notification,)).toList()
-          ),
-        ],
-      );
+    switch (type) {
+      case 'others':
+        _notifications = _model.others;
+        break;
+      case 'yesterday':
+        _notifications = _model.yesterday;
+        break;
+      case 'today':
+        _notifications = _model.today;
+        break;
     }
-  }
 
-  Widget _buildTodayNotifications() {
-    if (_model.today == null) {
+    if (_notifications == null) {
       return Container();
     } else {
       return Column(
         children: <Widget>[
-          _NotificationBoxTitle(title: 'today',),
+          _NotificationBoxTitle(title: title == null ? type : title,),
           Column(
-            children: _model.others.toList().map((notification) => NotificationBox(notification: notification,)).toList()
+            children: _notifications.toList().map((notification) => NotificationBox(notification: notification,)).toList()
           ),
         ],
       );
@@ -97,9 +81,9 @@ class NotificationDrawerState extends State<NotificationDrawer> {
                     padding: const EdgeInsets.all(0.0),
                     shrinkWrap: true,
                     children: <Widget>[
-                      _buildTodayNotifications(),
-                      _buildYesterdayNotifications(),
-                      _buildOtherNotifications(),
+                      _buildNotifications('today'),
+                      _buildNotifications('yesterday'),
+                      _buildNotifications('others', 'past days'),
                     ]
                   ),
                 ),
