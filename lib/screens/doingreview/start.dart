@@ -34,13 +34,15 @@ class ProfileView extends StatelessWidget {
                     children: <Widget>[
                       WaveAvatar(url: model.review.reviewee.photoUrl, height: 100.0, width: 100.0),
                       SizedBox(width: 10.0,),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(model.review.reviewee.fullName, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 26.0)),
-                          SizedBox(height: 5.0),
-                          Text(model.review.reviewee.title)
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(model.review.reviewee.fullName, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 26.0)),
+                            SizedBox(height: 5.0),
+                            Text(model.review.reviewee.title)
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -60,7 +62,7 @@ class ProfileView extends StatelessWidget {
                       ),
                       SizedBox(height: 10.0,),
                       Text(
-                        'May 2017',
+                        model.review.reviewee.formattedDateJoined,
                         style: TextStyle(
                           fontWeight: FontWeight.w500, 
                           fontSize: 16.0
@@ -82,7 +84,7 @@ class ProfileView extends StatelessWidget {
                       ),
                       SizedBox(height: 10.0,),
                       Text(
-                        '1 year and 5 months',
+                        model.review.reviewee.durationOfWork,
                         style: TextStyle(
                           fontWeight: FontWeight.w500, 
                           fontSize: 16.0

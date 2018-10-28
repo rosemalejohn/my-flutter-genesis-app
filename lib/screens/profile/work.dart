@@ -27,7 +27,7 @@ class ProfileWork extends StatelessWidget {
                   Column(
                     children: <Widget>[
                       WaveProfileInfoRow(title: 'Location', description: model.company.city),
-                      WaveProfileInfoRow(title: 'Start Date', description: 'January 2017'),
+                      WaveProfileInfoRow(title: 'Start Date', description: model.authProfile.formattedDateJoined),
                       WaveProfileInfoRow(title: 'Status', description: model.authProfile.employmentStatus),
                     ],
                   ),

@@ -61,7 +61,8 @@ class Review {
         fullName: _reviewee['full_name'],
         photoUrl: _reviewee['photo_url'],
         title: _reviewee['title'],
-        employmentStatus: _reviewee['status']
+        employmentStatus: _reviewee['status'],
+        dateJoined: DateTime.parse(_reviewee['date_joined'])
       )
     );
   }

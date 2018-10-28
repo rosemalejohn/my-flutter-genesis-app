@@ -1,3 +1,6 @@
+import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 class User {
 
   final int id;
@@ -38,6 +41,23 @@ class User {
     this.phone = ''
   });
 
+  String get formattedDateJoined {
+    if (dateJoined != null) {
+      return DateFormat('MMMM yyyy').format(dateJoined);
+    }
+    return '';
+  }
+
+  String get durationOfWork {
+    if (dateJoined != null) {
+      Duration duration = DateTime.now().difference(dateJoined);
+
+      return duration.inDays.toString() + ' days';
+    }
+
+    return '';
+  }
+
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
@@ -47,7 +67,7 @@ class User {
       email: json['email'],
       personalEmail: json['personal_email'],
       employmentStatus: json['employment_status'],
-      // dateJoined: json['date_joined'],
+      dateJoined: DateTime.parse(json['date_joined']),
       hardSkillIds: json['hard_skills'],
       isExecutive: json['is_executive'],
       linkedin: json['linkedin'],

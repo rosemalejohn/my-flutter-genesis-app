@@ -1,38 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:performancewave/layouts/singlepage.dart';
+import 'package:performancewave/models/review.dart';
+import 'package:performancewave/store/ranking.dart';
 import 'package:performancewave/widgets/avatar.dart';
 import 'package:performancewave/widgets/stat_filter.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class Rankings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SinglePage(
-      title: Text('Rankings'),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: <Widget>[
-                WaveStatFilter(),
-                Center(
-                  child: Text('89.0%', style: TextStyle(fontSize: 70.0))
-                ),
-                Divider(),
-                SizedBox(height: 10.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _topRank.map((employee) => WaveTopRank(employee: employee)).toList(),
-                ),
-                SizedBox(height: 10.0),
-                Divider(),
-                Column(
-                  children: _bottomRank.map((employee) => WaveRank(employee: employee,)).toList(),
-                )
-              ],
-            ),
-          ),
-        ],
+    RankingModel model = RankingModel();
+    model.getReviewRankings();
+
+    return ScopedModel<RankingModel>(
+      model: model,
+      child: SinglePage(
+        title: Text('Rankings'),
+        body: ScopedModelDescendant<RankingModel>(
+          builder: (BuildContext context, child, model) {
+            if (model.rankings == null) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              final List _topRank = model.rankings.take(3).toList();
+              final List _bottomRank = model.rankings.sublist(3).toList();
+
+              return ListView(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: <Widget>[
+                        WaveStatFilter(),
+                        Center(
+                          child: Text(model.average.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 70.0))
+                        ),
+                        Divider(),
+                        SizedBox(height: 10.0),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: _topRank.map((review) => WaveTopRank(review: review)).toList(),
+                        ),
+                        SizedBox(height: 10.0),
+                        Divider(),
+                        Column(
+                          children: _bottomRank.map((review) => WaveRank(review: review,)).toList(),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }
+          }
+        ),
       ),
     );
   }
@@ -40,9 +60,13 @@ class Rankings extends StatelessWidget {
 
 class WaveTopRank extends StatelessWidget {
 
-  final Employee employee;
+  final Review review;
+  final int rank;
 
-  WaveTopRank({ this.employee });
+  WaveTopRank({
+    this.review,
+    this.rank = 1
+  });
 
   String _getCrownImage(int rank) {
     String _crownImage;
@@ -75,21 +99,21 @@ class WaveTopRank extends StatelessWidget {
               height: 30.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(_getCrownImage(employee.rank)),
+                  image: AssetImage(_getCrownImage(rank)),
                 )
               ),
             ),
             SizedBox(height: 5.0),
-            WaveAvatar(height: 90.0, width: 90.0, url: employee.avatar,),
+            WaveAvatar(height: 90.0, width: 90.0, url: review.reviewee.photoUrl,),
             SizedBox(height: 30.0,),
             Text(
-              employee.name, 
+              review.reviewee.fullName, 
               style: TextStyle(fontSize: 18.0),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10.0,),
             Text(
-              employee.rating.toString() + '%',
+              review.average.toString() + '%',
               style: TextStyle(
                 fontSize: 18.0,
                 color: Theme.of(context).primaryColor
@@ -103,7 +127,7 @@ class WaveTopRank extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Icon(Icons.person, color: Color(0xffA9A9A9),),
-                      Text('8', style: TextStyle(color: Color(0xffA9A9A9), fontSize: 18.0))
+                      Text(review.totalReviewers.toString(), style: TextStyle(color: Color(0xffA9A9A9), fontSize: 18.0))
                     ],
                   ),
                 ),
@@ -111,7 +135,7 @@ class WaveTopRank extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.grade, color: Theme.of(context).primaryColor),
-                      Text('2', style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0))
+                      Text(review.awardCount.toString(), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0))
                     ],
                   ),
                 ),
@@ -126,9 +150,13 @@ class WaveTopRank extends StatelessWidget {
 
 class WaveRank extends StatelessWidget {
 
-  final Employee employee;
+  final Review review;
+  final int rank;
 
-  WaveRank({this.employee});
+  WaveRank({
+    this.review,
+    this.rank = 1
+  });
 
   Widget build(BuildContext context) {
     return Column(
@@ -136,18 +164,18 @@ class WaveRank extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(width: 30.0, child: Text(employee.rank.toString(), style: TextStyle(fontSize: 18.0))),
-            WaveAvatar(height: 70.0, width: 70.0, url: employee.avatar),
+            Container(width: 30.0, child: Text(rank.toString(), style: TextStyle(fontSize: 18.0))),
+            WaveAvatar(height: 70.0, width: 70.0, url: review.reviewee.photoUrl),
             SizedBox(width: 20.0,),
             Expanded(
               child: Text(
-                employee.name,
+                review.reviewee.fullName,
                 style: TextStyle(fontSize: 18.0)
               ),
             ),
             Expanded(
               child: Text(
-                employee.rating.toString() + '%',
+                review.average.toString() + '%',
                 style: TextStyle(fontSize: 18.0, color: Theme.of(context).primaryColor)
               ),
             ),
@@ -159,7 +187,7 @@ class WaveRank extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Icon(Icons.person, color: Color(0xffA9A9A9),),
-                        Text('8', style: TextStyle(color: Color(0xffA9A9A9), fontSize: 18.0))
+                        Text(review.totalReviewers.toString(), style: TextStyle(color: Color(0xffA9A9A9), fontSize: 18.0))
                       ],
                     ),
                   ),
@@ -167,7 +195,7 @@ class WaveRank extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Icon(Icons.grade, color: Theme.of(context).primaryColor),
-                        Text('2', style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0))
+                        Text(review.awardCount.toString(), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0))
                       ],
                     ),
                   ),
@@ -181,83 +209,3 @@ class WaveRank extends StatelessWidget {
     );
   }
 }
-
-class Employee {
-  final String name;
-  final String position;
-  final String avatar;
-  final String due;
-  final double rating;
-  final int rank;
-
-  Employee({this.name, this.position, this.avatar, this.due, this.rating, this.rank});
-}
-
-List<Employee> _topRank = <Employee>[
-  Employee(
-    name: 'Rosemale-John II Villacorta',
-    position: 'Marketing Director',
-    avatar: 'https://cdn.filestackcontent.com/X94WAg2TG2jWtWpdkZar',
-    rating: 91.6,
-    rank: 1
-  ),
-  Employee(
-    name: 'Yeng Wai Leong',
-    position: 'Marketing Director',
-    avatar: 'https://cdn.filestackcontent.com/41sbFkPSneEIDloibmSa',
-    rating: 89.9,
-    rank: 2
-  ),
-  Employee(
-    name: 'Micky Lin',
-    position: 'Marketing Director',
-    avatar: 'https://cdn.filestackcontent.com/Mk4EoD8KTeGSKGLejtYB',
-    rating: 89.8,
-    rank: 3
-  ),
-];
-
-List<Employee> _bottomRank = <Employee>[
-  Employee(
-    name: 'Francis Claide Magallen',
-    position: 'Marketing Director',
-    avatar: 'https://cdn.filestackcontent.com/VOPdTIEZRtCvw2tDB7yg',
-    rating: 89.8,
-    rank: 4
-  ),
-  Employee(
-    name: 'Damien Cummings',
-    position: 'Marketing Director',
-    avatar: 'https://cdn.filestackcontent.com/W3LcbAJ9QWe4MRupGNLe',
-    rating: 89.3,
-    rank: 5
-  ),
-  Employee(
-    name: 'Kszyr Ver Cobrador',
-    position: 'Marketing Director',
-    avatar: 'https://cdn.filestackcontent.com/zd7iEvqTIC7uG0ux0fGW',
-    rating: 88.8,
-    rank: 6
-  ),
-  Employee(
-    name: 'Aurelia Jessica',
-    position: 'Marketing Director',
-    avatar: 'https://cdn.filestackcontent.com/zd7iEvqTIC7uG0ux0fGW',
-    rating: 89.8,
-    rank: 7
-  ),
-  Employee(
-    name: 'Arthur Yap',
-    position: 'Marketing Director',
-    avatar: 'https://cdn.filestackcontent.com/i8PzI80PSg2RMwPVjMpg',
-    rating: 89.3,
-    rank: 8
-  ),
-  Employee(
-    name: 'Norbert Feria',
-    position: 'Marketing Director',
-    avatar: 'https://cdn.filestackcontent.com/uMxjSREQvaml1PnjxY1q',
-    rating: 88.8,
-    rank: 9
-  ),
-];

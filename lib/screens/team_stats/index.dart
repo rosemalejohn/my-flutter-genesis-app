@@ -28,7 +28,8 @@ class TeamStatsState extends State<TeamStats> with SingleTickerProviderStateMixi
   Widget build(BuildContext context) {
     return SinglePage(
       title: Text('Team Stats'),
-      body: ListView(
+      body: Column(
+        // mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(20.0),
@@ -83,14 +84,15 @@ class TeamStatsState extends State<TeamStats> with SingleTickerProviderStateMixi
               ],
             ),
           ),
-          Container(
-            height: 500.0,
-            child: TabBarView(
-              controller: _tabController,
-              children: <Widget>[
-                TeamTab(),
-                DirectsTab(),
-              ],
+          Expanded(
+            child: Container(
+              child: TabBarView(
+                controller: _tabController,
+                children: <Widget>[
+                  TeamTab(),
+                  DirectsTab(),
+                ],
+              ),
             ),
           )
         ],
