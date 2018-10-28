@@ -20,4 +20,5 @@ ThemeData waveTheme = ThemeData(
   textTheme: TextTheme(
     button: TextStyle(color: Colors.white),
   ),
+  fontFamily: 'Lato'
 );

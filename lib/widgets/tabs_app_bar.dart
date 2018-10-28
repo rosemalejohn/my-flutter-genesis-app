@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class PerformanceWaveAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final title;
+  final TabController tabController;
 
-  PerformanceWaveAppBar({this.title});
+  PerformanceWaveAppBar({this.title, this.tabController});
 
   @override
   Size get preferredSize => new Size.fromHeight(kToolbarHeight + 40);
@@ -22,6 +23,7 @@ class PerformanceWaveAppBar extends StatelessWidget implements PreferredSizeWidg
         )
       ],
       bottom: TabBar(
+        controller: tabController,
         labelColor: Colors.white,
         indicatorWeight: 4.0,
         tabs: <Widget>[

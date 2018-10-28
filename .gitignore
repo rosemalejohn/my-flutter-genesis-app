@@ -9,3 +9,5 @@ build/
 .flutter-plugins
 
 android/key.properties
+
+.env

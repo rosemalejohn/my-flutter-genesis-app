@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:performancewave/screens/dashboard/index.dart';
 import 'package:performancewave/store/app.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -119,7 +120,9 @@ class MainDrawer extends StatelessWidget {
                       leading: Icon(Icons.trending_up),
                       title: Text('Your stats'),
                       onTap: () {
-                        Navigator.pushNamed(context, '/');
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (BuildContext context) => Dashboard(tabIndex: 1)
+                        ));
                       }
                     ),
                     ListTile(

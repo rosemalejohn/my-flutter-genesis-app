@@ -12,7 +12,7 @@ import 'package:performancewave/screens/team_stats/index.dart';
 
 Object routes (context) {
   return {
-    '/': (context) => Dashboard(title: 'Home'),
+    '/': (context) => Dashboard(),
     '/login': (context) => Login(),
     '/do-review/start': (context) => StartReview(),
     '/do-review': (context) => DoingReview(),
