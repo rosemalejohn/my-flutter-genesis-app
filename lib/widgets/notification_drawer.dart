@@ -63,7 +63,13 @@ class NotificationDrawerState extends State<NotificationDrawer> {
             return Column(
               children: <Widget>[
                 AppBar(
-                  title: Text('Notifications', style: TextStyle(color: Colors.black)),
+                  title: Text(
+                    'Notifications',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold
+                    )
+                  ),
                   actions: <Widget>[
                     IconButton(
                       icon: Icon(Icons.done_all),

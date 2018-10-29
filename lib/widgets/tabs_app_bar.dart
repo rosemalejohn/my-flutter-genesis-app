@@ -23,6 +23,7 @@ class PerformanceWaveAppBar extends StatelessWidget implements PreferredSizeWidg
         )
       ],
       bottom: TabBar(
+        indicatorColor: Colors.white,
         controller: tabController,
         labelColor: Colors.white,
         indicatorWeight: 4.0,

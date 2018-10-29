@@ -57,11 +57,11 @@ class ReviewCard extends StatelessWidget {
             height: 70.0,
             width: 70.0,
             url: review.reviewee.photoUrl,
-            borderColor: review.isOverdue ? Colors.red : null,
+            borderColor: review.isOverdue ? Theme.of(context).errorColor : null,
           ),
           title: Text(
             review.isOverdue ? 'OVERDUE' : 'DUE ${review.due}'.toUpperCase(),
-            style: TextStyle(color: Theme.of(context).primaryColor)
+            style: TextStyle(color: review.isOverdue ? Theme.of(context).errorColor : Theme.of(context).primaryColor)
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +74,7 @@ class ReviewCard extends StatelessWidget {
           ),
           trailing: WaveButton(
             text: "Review",
-            color: review.isOverdue ? Colors.red : Theme.of(context).primaryColor,
+            color: review.isOverdue ? Theme.of(context).errorColor : Theme.of(context).primaryColor,
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
                 builder: (BuildContext context) => StartReview(reviewId: review.id,)

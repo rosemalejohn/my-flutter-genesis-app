@@ -39,10 +39,14 @@ class Review {
   factory Review.fromJson(Map<String, dynamic> json) {
     var _reviewee = json['reviewee']['data'];
 
+    double _parseAverage(dynamic average) {
+      return average.toDouble();
+    }
+
     return Review(
       id: json['id'],
       approved: json['approved'],
-      // average: json['average'],
+      average: _parseAverage(json['average']),
       awardCount: json['award_count'],
       completed: json['completed'],
       due: json['due'],

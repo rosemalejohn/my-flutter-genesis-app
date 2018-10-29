@@ -164,6 +164,7 @@ class StartReviewSetup extends StatelessWidget {
                                       outlined: true,
                                       text: 'No, confirm this',
                                       color: Colors.white,
+                                      textColor: Colors.black,
                                       onPressed: () {
                                         
                                       }

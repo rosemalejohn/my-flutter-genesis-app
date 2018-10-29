@@ -8,14 +8,17 @@ class WaveButton extends StatelessWidget {
 
   final Color color;
 
-  bool outlined;
+  final Color textColor;
+
+  final bool outlined;
 
   WaveButton({
     this.text,
     this.onPressed,
     this.color,
-    this.outlined = false
-  });
+    this.outlined = false,
+    this.textColor = Colors.white
+  }); 
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class WaveButton extends StatelessWidget {
           borderRadius: new BorderRadius.circular(30.0),
         ),
         onPressed: onPressed,
-        child: Text(text, style: TextStyle(fontSize: 16.0),),
+        child: Text(text, style: TextStyle(fontSize: 16.0, color: textColor)),
         borderSide: BorderSide(
           color: Colors.amber,
         ),
@@ -35,7 +38,7 @@ class WaveButton extends StatelessWidget {
         shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0),
         ),
-        child: Text(text, style: TextStyle(fontSize: 16.0),),
+        child: Text(text, style: TextStyle(fontSize: 16.0, color: textColor),),
         color: color != null ? color : Theme.of(context).primaryColor,
         onPressed: onPressed
       );

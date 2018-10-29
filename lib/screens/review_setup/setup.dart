@@ -214,7 +214,7 @@ class ReviewSetupView extends StatelessWidget {
                   Expanded(
                     child: WaveButton(
                       text: 'Reject',
-                      color: Colors.red,
+                      color: Theme.of(context).errorColor,
                       onPressed: () {
                         
                       }

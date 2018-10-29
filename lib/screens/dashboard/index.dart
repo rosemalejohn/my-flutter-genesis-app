@@ -25,6 +25,7 @@ class Dashboard extends StatefulWidget {
 class DashboardState extends State<Dashboard> with SingleTickerProviderStateMixin {
 
   TabController _tabController;
+  bool _showFab;
 
   @override
   void initState() {
@@ -34,6 +35,7 @@ class DashboardState extends State<Dashboard> with SingleTickerProviderStateMixi
       initialIndex: widget.tabIndex,
       vsync: this
     );
+    _showFab = true;
   }
 
   @override
@@ -49,21 +51,72 @@ class DashboardState extends State<Dashboard> with SingleTickerProviderStateMixi
         ),
         drawer: MainDrawer(),
         endDrawer: NotificationDrawer(),
-        body: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            ReviewTabContent(),
-            StatsTabContent(),
-          ],
+        body: GestureDetector(
+          onPanDown: (DragDownDetails dragDownDetails) {
+            print(dragDownDetails.globalPosition.direction);
+          },
+          child: TabBarView(
+            controller: _tabController,
+            children: <Widget>[
+              ReviewTabContent(),
+              StatsTabContent(),
+            ],
+          ),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: _FloatingActionButton(show: _showFab),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      )
+    );
+  }
+}
+
+class _FloatingActionButton extends StatefulWidget {
+
+  final bool show;
+
+  _FloatingActionButton({ this.show });
+
+  @override
+  _FloatingActionButtonState createState() {
+    return new _FloatingActionButtonState();
+  }
+}
+
+class _FloatingActionButtonState extends State<_FloatingActionButton> {
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 3000),
+      child: Container(
+        height: widget.show ? 50.0 : 0.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50.0),
+          color: Theme.of(context).primaryColor,
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0.0, 2.0),
+              blurRadius: 10.0,
+            ),
+          ]
+        ),
+        child: RawMaterialButton(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              Text('Setup review', style: TextStyle(color: Colors.white, fontSize: 16.0))
+            ],
+          ),
           onPressed: () {
             Navigator.pushNamed(context, '/setup-review/start');
           },
-          tooltip: 'Setup review',
-          child: Icon(Icons.add),
-        ), // This trailing comma makes auto-formatting nicer for build methods.
-      )
+        ),
+      ),
     );
   }
 }

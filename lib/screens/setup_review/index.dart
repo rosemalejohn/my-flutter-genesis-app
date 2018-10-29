@@ -103,6 +103,7 @@ class _SetupReviewState extends State<SetupReview> with SingleTickerProviderStat
             controller: _tabController,
             labelColor: Colors.white,
             indicatorWeight: 4.0,
+            indicatorColor: Colors.white,
             tabs: <Widget>[
               Tab(text: 'PROFILE'),
               Tab(text: 'PURPOSE'),

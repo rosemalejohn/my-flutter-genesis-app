@@ -7,7 +7,7 @@ class WaveStatFilter extends StatelessWidget {
       children: <Widget>[
         Text(
           'Stats for',
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500)
+          style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)
         ),
         SizedBox(width: 30.0,),
         Expanded(

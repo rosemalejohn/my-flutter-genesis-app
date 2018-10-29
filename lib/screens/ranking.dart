@@ -23,6 +23,8 @@ class Rankings extends StatelessWidget {
             } else {
               final List _topRank = model.rankings.take(3).toList();
               final List _bottomRank = model.rankings.sublist(3).toList();
+              int _currentTopRank = 0;
+              int _currentBottomRank = 2;
 
               return ListView(
                 children: <Widget>[
@@ -38,12 +40,12 @@ class Rankings extends StatelessWidget {
                         SizedBox(height: 10.0),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: _topRank.map((review) => WaveTopRank(review: review)).toList(),
+                          children: _topRank.map((review) => WaveTopRank(review: review, rank: ++_currentTopRank,)).toList(),
                         ),
                         SizedBox(height: 10.0),
                         Divider(),
                         Column(
-                          children: _bottomRank.map((review) => WaveRank(review: review,)).toList(),
+                          children: _bottomRank.map((review) => WaveRank(review: review, rank: ++_currentBottomRank)).toList(),
                         )
                       ],
                     ),
@@ -108,14 +110,14 @@ class WaveTopRank extends StatelessWidget {
             SizedBox(height: 30.0,),
             Text(
               review.reviewee.fullName, 
-              style: TextStyle(fontSize: 18.0),
+              style: TextStyle(fontSize: 16.0),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10.0,),
             Text(
               review.average.toString() + '%',
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: 16.0,
                 color: Theme.of(context).primaryColor
               ),
             ),
@@ -164,44 +166,39 @@ class WaveRank extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(width: 30.0, child: Text(rank.toString(), style: TextStyle(fontSize: 18.0))),
+            Container(width: 30.0, child: Text(rank.toString(), style: TextStyle(fontSize: 16.0))),
             WaveAvatar(height: 70.0, width: 70.0, url: review.reviewee.photoUrl),
             SizedBox(width: 20.0,),
             Expanded(
+              flex: 3,
               child: Text(
                 review.reviewee.fullName,
-                style: TextStyle(fontSize: 18.0)
+                style: TextStyle(fontSize: 16.0)
               ),
             ),
+            SizedBox(width: 20.0,),
             Expanded(
               child: Text(
                 review.average.toString() + '%',
-                style: TextStyle(fontSize: 18.0, color: Theme.of(context).primaryColor)
+                style: TextStyle(fontSize: 16.0, color: Theme.of(context).primaryColor)
               ),
             ),
             Expanded(
               child: Row(
-                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.person, color: Color(0xffA9A9A9),),
-                        Text(review.totalReviewers.toString(), style: TextStyle(color: Color(0xffA9A9A9), fontSize: 18.0))
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.grade, color: Theme.of(context).primaryColor),
-                        Text(review.awardCount.toString(), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0))
-                      ],
-                    ),
-                  ),
+                  Icon(Icons.person, color: Color(0xffA9A9A9),),
+                  Text(review.totalReviewers.toString(), style: TextStyle(color: Color(0xffA9A9A9), fontSize: 16.0))
                 ],
-              )
-            )
+              ),
+            ),
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.grade, color: Theme.of(context).primaryColor),
+                  Text(review.awardCount.toString(), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16.0))
+                ],
+              ),
+            ),
           ],
         ),
         Divider()

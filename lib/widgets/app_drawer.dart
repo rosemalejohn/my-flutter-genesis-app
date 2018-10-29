@@ -153,7 +153,7 @@ class MainDrawer extends StatelessWidget {
               Divider(),
               ListTile(
                 leading: Icon(Icons.settings_power),
-                title: Text('Log out of Performance Wave', style: TextStyle(color: Colors.red)),
+                title: Text('Log out of Performance Wave', style: TextStyle(color: Theme.of(context).errorColor)),
                 onTap: () {
                   _confirmLogout(context);
                   Navigator.pushNamed(context, '/login');
