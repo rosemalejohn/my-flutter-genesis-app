@@ -36,7 +36,7 @@ class ReviewTabContent extends StatelessWidget {
             return _getReviewList(context);
           },
           child: _buildContent(model),
-        ); 
+        );
       }
     );
   }

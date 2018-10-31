@@ -129,7 +129,7 @@ class WaveTopRank extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Icon(Icons.person, color: Color(0xffA9A9A9),),
-                      Text(review.totalReviewers.toString(), style: TextStyle(color: Color(0xffA9A9A9), fontSize: 18.0))
+                      Text(review.totalReviewers.toString(), style: TextStyle(color: Color(0xffA9A9A9), fontSize: 16.0))
                     ],
                   ),
                 ),
@@ -137,7 +137,7 @@ class WaveTopRank extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.grade, color: Theme.of(context).primaryColor),
-                      Text(review.awardCount.toString(), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0))
+                      Text(review.awardCount.toString(), style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16.0))
                     ],
                   ),
                 ),
@@ -168,15 +168,16 @@ class WaveRank extends StatelessWidget {
           children: <Widget>[
             Container(width: 30.0, child: Text(rank.toString(), style: TextStyle(fontSize: 16.0))),
             WaveAvatar(height: 70.0, width: 70.0, url: review.reviewee.photoUrl),
-            SizedBox(width: 20.0,),
             Expanded(
               flex: 3,
-              child: Text(
-                review.reviewee.fullName,
-                style: TextStyle(fontSize: 16.0)
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  review.reviewee.fullName,
+                  style: TextStyle(fontSize: 16.0)
+                ),
               ),
             ),
-            SizedBox(width: 20.0,),
             Expanded(
               child: Text(
                 review.average.toString() + '%',

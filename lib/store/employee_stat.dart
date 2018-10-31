@@ -11,12 +11,15 @@ class EmployeeStatModel extends Model {
     _http = Api();
   }
 
+  EmployeeStat get employeeStat => _employeeStat;
+
   void getStats() async {
     final response = await _http.get('/stats?type=Monthly&period=2018_8');
 
     if (response.statusCode == 200) {
-      // List<dynamic> awardResponse = response.data['data']['awards'];
-      print(response.data);
+      _employeeStat = EmployeeStat.fromJson(response.data['data']);
+      
+      notifyListeners();
     }
   }
 

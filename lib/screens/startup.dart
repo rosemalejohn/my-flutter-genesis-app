@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:performancewave/store/app.dart';
 
 class Startup extends StatelessWidget {
   final List<String> _loadingMessages = [
@@ -21,6 +22,11 @@ class Startup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppModel.of(context).initApp()
+      .then((res) {
+        Navigator.pushReplacementNamed(context, '/dashboard');
+      });
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Padding(

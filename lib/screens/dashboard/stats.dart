@@ -29,6 +29,9 @@ class StatsTabContentState extends State<StatsTabContent> {
         builder: (BuildContext context) {
           return ScopedModelDescendant<EmployeeStatModel>(
             builder: (BuildContext context, child, model) {
+              if (model.employeeStat == null) {
+                return Center(child: CircularProgressIndicator());
+              }
               return ListView(
                 children: <Widget>[
                   Padding(
@@ -37,7 +40,7 @@ class StatsTabContentState extends State<StatsTabContent> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         WaveStatFilter(),
-                        Center(child: Text('89.3%', style: TextStyle(fontSize: 70.0))),
+                        Center(child: Text(model.employeeStat.userAverage.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 70.0))),
                         Divider(),
                         Row(
                           children: <Widget>[
@@ -46,7 +49,7 @@ class StatsTabContentState extends State<StatsTabContent> {
                                 children: <Widget>[
                                   Text('Team rating', style: TextStyle(color: Color(0xffaaaaaa))),
                                   SizedBox(height: 10.0,),
-                                  Text('87.2%', style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w500))
+                                  Text(model.employeeStat.teamAverage.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w500))
                                 ],
                               ),
                             ),
@@ -55,7 +58,7 @@ class StatsTabContentState extends State<StatsTabContent> {
                                 children: <Widget>[
                                   Text('Company average', style: TextStyle(color: Color(0xffaaaaaa))),
                                   SizedBox(height: 10.0,),
-                                  Text('88.0%', style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w500))
+                                  Text(model.employeeStat.companyAverage.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w500))
                                 ],
                               ),
                             )

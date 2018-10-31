@@ -35,7 +35,7 @@ class AppModel extends Model {
     notifyListeners();
   }
 
-  void initApp() async {
+  Future<Null> initApp() async {
     final response = await _http.get('/performancewave-meta');
 
     if (response.statusCode == 200) {

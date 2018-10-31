@@ -12,6 +12,7 @@ class EmployeeStat {
   final double userAverage;
   final User user;
   final double userPrevAverage;
+  final Map<String, dynamic> details;
 
   EmployeeStat({
     this.awards,
@@ -23,21 +24,40 @@ class EmployeeStat {
     this.totalReviewsSubmitted,
     this.userAverage,
     this.user,
-    this.userPrevAverage
+    this.userPrevAverage,
+    this.details
   });
 
   factory EmployeeStat.fromJson(Map<String, dynamic> json) {
+    final user = json['user'];
+    final List<dynamic> awards = json['awards'];
+    final List<dynamic> comments = json['comments'];
+    final details = json['details'];
+
     return EmployeeStat(
-      awards: json['awards'],
-      comments: json['comments'],
-      companyAverage: json['company_average'],
-      teamAverage: json['team_average'],
-      totalReviewers: json['total_reviewers'],
-      totalReviewersDone: json['total_reviewers_done'],
-      totalReviewsSubmitted: json['total_reviews_submitted'],
-      userAverage: json['user_average'],
-      user: json['user'],
-      userPrevAverage: json['user_prev_average']
+      awards: awards.cast().map((award) {
+        return Award.fromJson(award);
+      }).toList(),
+      comments: comments.cast().map((comment) {
+        return Comment.fromJson(comment);
+      }).toList(),
+      companyAverage: double.parse(json['companyAverage']),
+      teamAverage: double.parse(json['teamAverage']),
+      totalReviewers: json['totalReviewers'],
+      totalReviewersDone: json['totalReviewsDone'],
+      totalReviewsSubmitted: json['totalReviewsSubmitted'],
+      userAverage: double.parse(json['userAverage']),
+      // user: User(
+      //   id: user['id'],
+      //   firstName: user['first_name'],
+      //   lastName: user['last_name'],
+      //   fullName: user['full_name'],
+      //   photoUrl: user['photo_url'],
+      //   title: user['title'],
+      //   employmentStatus: user['status'],
+      //   dateJoined: DateTime.parse(user['date_joined'])
+      // ),
+      userPrevAverage: double.parse(json['userPrevAverage']),
     );
   }
 
@@ -58,7 +78,7 @@ class Award {
   factory Award.fromJson(Map<String, dynamic> json) {
     return Award(
       id: json['id'],
-      awardedBy: json['user'],
+      // awardedBy: json['user'],
       title: json['title']
     );
   }
@@ -84,8 +104,24 @@ class Comment {
       id: json['id'],
       comment: json['comment'],
       title: json['title'],
-      commentedBy: json['user']
+      // commentedBy: json['user']
     );
   }
+
+}
+
+class EmployeeStatDetail {
+
+  final double average;
+  final int commentCount;
+  final double prevAverage;
+  final int awardCount;
+
+  EmployeeStatDetail({
+    this.average,
+    this.commentCount,
+    this.prevAverage,
+    this.awardCount
+  });
 
 }

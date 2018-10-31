@@ -12,7 +12,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppModel model = AppModel();
-    model.initApp();
 
     return ScopedModel<AppModel>(
       model: model,
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
         title: 'Performance Wave',
         theme: waveTheme,
         debugShowCheckedModeBanner: false,
-        home: Dashboard(),
+        home: Startup(),
         routes: routes(context)
       )
     );
