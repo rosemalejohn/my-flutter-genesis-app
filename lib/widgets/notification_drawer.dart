@@ -3,39 +3,22 @@ import 'package:performancewave/models/notification.dart';
 import 'package:performancewave/store/notification.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class NotificationDrawer extends StatefulWidget {
+class NotificationDrawer extends StatelessWidget {
 
   NotificationDrawer();
 
-  @override
-  NotificationDrawerState createState() {
-    return new NotificationDrawerState();
-  }
-}
-
-class NotificationDrawerState extends State<NotificationDrawer> {
-
-  NotificationModel _model;
-
-  @override
-  void initState() {
-    super.initState();
-    _model = NotificationModel();
-    _model.getNotification();
-  }
-
-  Widget _buildNotifications(String type, [String title]) {
+  Widget _buildNotifications(NotificationModel model, String type, [String title]) {
     List<dynamic> _notifications;
 
     switch (type) {
       case 'others':
-        _notifications = _model.others;
+        _notifications = model.others;
         break;
       case 'yesterday':
-        _notifications = _model.yesterday;
+        _notifications = model.yesterday;
         break;
       case 'today':
-        _notifications = _model.today;
+        _notifications = model.today;
         break;
     }
 
@@ -55,51 +38,49 @@ class NotificationDrawerState extends State<NotificationDrawer> {
 
   @override
   Widget build(BuildContext context) {  
-    return ScopedModel<NotificationModel>(
-      model: _model,
-      child: Drawer(
-        child: ScopedModelDescendant<NotificationModel>(
-          builder: (BuildContext context, child, model) {
-            return Column(
-              children: <Widget>[
-                AppBar(
-                  title: Text(
-                    'Notifications',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                    )
-                  ),
-                  actions: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.done_all),
-                      color: Colors.black,
-                      onPressed: () {
-                        Scaffold.of(context).openEndDrawer();
-                      },
-                    )
-                  ],
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.white,
+    return Drawer(
+      child: ScopedModelDescendant<NotificationModel>(
+        builder: (BuildContext context, child, model) {
+          return Column(
+            children: <Widget>[
+              AppBar(
+                title: Text(
+                  'Notifications',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold
+                  )
                 ),
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.all(0.0),
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      _buildNotifications('today'),
-                      _buildNotifications('yesterday'),
-                      _buildNotifications('others', 'past days'),
-                    ]
-                  ),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.done_all),
+                    color: Colors.black,
+                    onPressed: () {
+                      Scaffold.of(context).openEndDrawer();
+                    },
+                  )
+                ],
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.white,
+              ),
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.all(0.0),
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    _buildNotifications(model, 'today'),
+                    _buildNotifications(model, 'yesterday'),
+                    _buildNotifications(model, 'others', 'past days'),
+                  ]
                 ),
-              ],
-            );
-          },
-        )
-      ),
+              ),
+            ],
+          );
+        },
+      )
     );
   }
+
 }
 
 class NotificationBox extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:performancewave/store/app.dart';
+import 'package:performancewave/store/notification.dart';
 
 class Startup extends StatelessWidget {
   final List<String> _loadingMessages = [
@@ -24,7 +25,8 @@ class Startup extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.wait([
       AppModel.of(context).initApp(),
-      AppModel.of(context).getDashboardStat()
+      AppModel.of(context).getDashboardStat(),
+      NotificationModel.of(context).getNotification()
     ]).then((res) {
       Navigator.pushReplacementNamed(context, '/dashboard');
     });

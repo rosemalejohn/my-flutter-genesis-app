@@ -4,17 +4,17 @@ import 'package:charts_flutter/flutter.dart' as charts;
 class SimpleLineChart extends StatelessWidget {
   final List<charts.Series> seriesList;
   final bool animate;
+  final String title;
 
-  SimpleLineChart(this.seriesList, {this.animate});
+  SimpleLineChart(this.seriesList, {this.animate, this.title = 'Graph'});
 
-  static List<charts.Series<dynamic, dynamic>> createLinearData(List<LinearSales> data) {
+  static List<charts.Series<LinearSales, int>> createLinearData(List<LinearSales> data) {
     return [
-      new charts.Series<LinearSales, dynamic>(
-        id: 'Sales',
+      new charts.Series<LinearSales, int>(
+        id: 'Line graph',
         colorFn: (_, __) => CustomColor.primary,
-        // colorFn: (_, __) => Palette,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (LinearSales data, _) => int.parse(data.label),
+        measureFn: (LinearSales data, _) => data.value,
         data: data,
       )
     ];
@@ -28,10 +28,10 @@ class SimpleLineChart extends StatelessWidget {
 }
 
 class LinearSales {
-  final String year;
-  final double sales;
+  final String label;
+  final double value;
 
-  LinearSales(this.year, this.sales);
+  LinearSales(this.label, this.value);
 }
 
 class CustomColor extends charts.MaterialPalette {

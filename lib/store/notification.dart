@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:performancewave/models/notification.dart';
 import 'package:performancewave/services/api/http.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -18,7 +19,7 @@ class NotificationModel extends Model {
   List<dynamic> get today => _today;
   List<dynamic> get yesterday => _yesterday; 
 
-  void getNotification() async {
+  Future<void> getNotification() async {
     final response = await _http.get('/notifications/recent');
 
     if (response.statusCode == 200) {
@@ -40,5 +41,7 @@ class NotificationModel extends Model {
       notifyListeners();
     }
   }
+
+  static NotificationModel of(BuildContext context) => ScopedModel.of<NotificationModel>(context);
 
 }

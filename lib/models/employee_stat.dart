@@ -47,7 +47,12 @@ class EmployeeStat {
     List<LinearSales> dataList = [];
 
     graphData.forEach((data, key) {
-      dataList.add(LinearSales(data.toString(), double.parse(key)));
+      dataList.add(
+        LinearSales(
+          data,
+          double.parse(key)
+        )
+      );
     });
 
     return SimpleLineChart(
@@ -190,7 +195,7 @@ class EmployeeStatDetail {
   double get loss {
     double diff = average - prevAverage;
     if (diff < 0) {
-      return diff;
+      return diff.abs();
     }
     return 0.0;
   }
@@ -202,9 +207,9 @@ class EmployeeStatDetail {
 
     return EmployeeStatDetail(
       title: json['title'],
-      average: double.parse(json['average']),
+      average: double.parse(json['average'].toString()),
       commentCount: json['comment_count'],
-      prevAverage: double.parse(json['prev_average']),
+      prevAverage: double.parse(json['prev_average'].toString()),
       awardCount: _checkNull(json['award_count'])
     );
   }

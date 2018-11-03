@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:performancewave/models/employee_stat.dart';
 import 'package:performancewave/store/employee_stat.dart';
 import 'package:performancewave/widgets/avatar.dart';
+import 'package:performancewave/widgets/growth.dart';
 import 'package:performancewave/widgets/stat_filter.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -42,7 +43,26 @@ class StatsTabContentState extends State<StatsTabContent> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         WaveStatFilter(),
-                        Center(child: Text(_employeeStat.userAverage.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 70.0))),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              _employeeStat.userAverage.toStringAsFixed(1) + '%',
+                              style: TextStyle(fontSize: 70.0)
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Icon(Icons.person, size: 16.0, color: Colors.grey),
+                                    Text(_employeeStat.totalReviewersDone.toString(), style: TextStyle(color: Colors.grey, fontSize: 16.0))
+                                  ],
+                                ),
+                                WaveGrowth(current: _employeeStat.userAverage, previous: _employeeStat.userPrevAverage),
+                              ]
+                            )
+                          ],
+                        ),
                         Divider(),
                         Row(
                           children: <Widget>[
@@ -183,26 +203,6 @@ class WaveStatDetailRow extends StatelessWidget {
     return count > 0 ? Theme.of(context).primaryColor : Color(0xffA9A9A9);
   }
 
-  Widget _buildProgress() {
-    if (details.gain > 0) {
-      return Row(
-        children: <Widget>[
-          Icon(Icons.arrow_drop_up, color: Color(0xff346407),),
-          Text(details.gain.toStringAsFixed(1), style: TextStyle(fontSize: 16.0, color: Color(0xff346407))),
-        ],
-      );
-    } else if (details.loss < 0) {
-      return Row(
-        children: <Widget>[
-          Icon(Icons.arrow_drop_down, color: Color(0xffd0011b),),
-          Text(details.gain.toStringAsFixed(1), style: TextStyle(fontSize: 16.0, color: Color(0xffd0011b))),
-        ],
-      );
-    } else {
-      return Container();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -212,7 +212,7 @@ class WaveStatDetailRow extends StatelessWidget {
           Expanded(flex: 2, child: Text(title, style: TextStyle(fontSize: 16.0))),
           Expanded(child: Text('${details.average.toStringAsFixed(1)}%', style: TextStyle(fontSize: 16.0))),
           Expanded(
-            child: _buildProgress()
+            child: WaveGrowth(current: details.average, previous: details.prevAverage,)
           ),
           Expanded(
             child: Row(
@@ -220,7 +220,7 @@ class WaveStatDetailRow extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: <Widget>[
-                      Icon(Icons.chat_bubble, color: _getDetailColor(context, details.commentCount)),
+                      Icon(Icons.chat_bubble, color: _getDetailColor(context, details.commentCount), size: 18.0),
                       Text(details.commentCount.toString(), style: TextStyle(color: _getDetailColor(context, details.commentCount), fontSize: 16.0))
                     ],
                   ),
@@ -228,7 +228,7 @@ class WaveStatDetailRow extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: <Widget>[
-                      Icon(Icons.grade, color: _getDetailColor(context, details.awardCount)),
+                      Icon(Icons.grade, color: _getDetailColor(context, details.awardCount), size: 18.0),
                       Text(details.awardCount.toString(), style: TextStyle(color: _getDetailColor(context, details.awardCount), fontSize: 16.0))
                     ],
                   ),
