@@ -17,6 +17,11 @@ class Review {
   final String year;
   final String lastUpdated;
   final User reviewee;
+  final List<HardSkill> hardSkills;
+  final List<User> internalReviewers;
+  final String deadline;
+  final String updatedAt;
+  final User teamLeader;
 
   Review({
     this.id = 0,
@@ -33,14 +38,35 @@ class Review {
     this.totalReviewsSubmitted = 0,
     this.year = '',
     this.lastUpdated = '',
-    this.reviewee
+    this.reviewee,
+    this.hardSkills,
+    this.internalReviewers,
+    this.deadline,
+    this.updatedAt,
+    this.teamLeader
   });
 
   factory Review.fromJson(Map<String, dynamic> json) {
-    var _reviewee = json['reviewee']['data'];
+    Map<String, dynamic> getTeamLeaderData () {
+      if (json.containsKey('teamLeader') && json['teamLeader']['data'].runtimeType == 'List<Dynamic>') {
+        return json['teamLeader']['data'];
+      }
+      return null;
+    }
 
     double _parseAverage(dynamic average) {
-      return average.toDouble();
+      return double.parse(average.toString());
+    }
+
+    final Map<String, dynamic> _reviewee = json['reviewee']['data'];
+    final Map<String, dynamic> _manager = getTeamLeaderData();
+    final List<dynamic> _internalReviewers = json.containsKey('internalReviewers') ? json['internalReviewers']['data'] : [];
+    final List<dynamic> _hardSkills = json.containsKey('hardSkills') ? json['hardSkills']['data'] : [];
+
+    _reviewee['employment_status'] = _reviewee['status'];
+    _reviewee['fullName'] = _reviewee['full_name'];
+    if (_manager != null) {
+      _manager['fullName'] = _manager['full_name'];
     }
 
     return Review(
@@ -58,16 +84,37 @@ class Review {
       totalReviewsSubmitted: json['total_reviews_submitted'],
       year: json['year'],
       lastUpdated: json['last_updated_at'],
-      reviewee: User(
-        id: _reviewee['id'],
-        firstName: _reviewee['first_name'],
-        lastName: _reviewee['last_name'],
-        fullName: _reviewee['full_name'],
-        photoUrl: _reviewee['photo_url'],
-        title: _reviewee['title'],
-        employmentStatus: _reviewee['status'],
-        dateJoined: DateTime.parse(_reviewee['date_joined'])
-      )
+      reviewee: User.fromJson(_reviewee),
+      internalReviewers: _internalReviewers.cast().map((reviewer) {
+        return User.fromJson(reviewer);
+      }).toList(),
+      hardSkills: _hardSkills.cast().map((skill) {
+        return HardSkill.fromJson(skill);
+      }).toList(),
+      deadline: json['deadline'],
+      updatedAt: json['updated_at'],
+      teamLeader: _manager == null ? null : User.fromJson(_manager)
+    );
+  }
+}
+
+class HardSkill {
+
+  final int id;
+  final String imageUrl;
+  final String title;
+
+  HardSkill({
+    this.id,
+    this.imageUrl,
+    this.title
+  });
+
+  factory HardSkill.fromJson(Map<String, dynamic> json) {
+    return HardSkill(
+      id: json['id'],
+      imageUrl: json['image_url'],
+      title: json['title']
     );
   }
 }

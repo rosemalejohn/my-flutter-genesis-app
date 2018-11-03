@@ -103,7 +103,6 @@ class StatsTabContentState extends State<StatsTabContent> {
                     color: Theme.of(context).primaryColor,
                   ),
                   Column(
-                    // mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
@@ -141,21 +140,34 @@ class StatsTabContentState extends State<StatsTabContent> {
                       // Reviewers
                       WaveStatTitleRow(title: 'REVIEWERS (${_employeeStat.totalReviewers})'),
                       // Internal reviewers
-                      Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: _employeeStat.internalReviewers.map((reviewer) {
-                                return WaveAvatar(height: 70.0, width: 70.0, url: reviewer.photoUrl);
-                              }).toList(),
-                            ),
-                          ),
-                        ],
+                      Container(
+                        height: 300.0,
+                        child: GridView.count(
+                          crossAxisCount: 4,
+                          padding: const EdgeInsets.all(20.0),
+                          mainAxisSpacing: 10.0,
+                          crossAxisSpacing: 10.0,
+                          children: _employeeStat.internalReviewers.map((reviewer) {
+                            return GridTile(
+                              child: Column(
+                                children: <Widget>[
+                                  WaveAvatar(height: 70.0, width: 70.0, url: reviewer.photoUrl),
+                                  SizedBox(height: 10.0,),
+                                  Container(
+                                    child: Flexible(
+                                      child: Text(
+                                        reviewer.fullName,
+                                        style: TextStyle(fontSize: 16.0),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }).toList()
+                        ),
                       ),
-                      Divider(color: Theme.of(context).primaryColor),
-                      SizedBox(height: 10.0,)
                     ],
                   )
                 ],

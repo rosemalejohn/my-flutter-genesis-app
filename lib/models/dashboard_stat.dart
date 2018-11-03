@@ -14,7 +14,7 @@ class DashboardStat {
 
   factory DashboardStat.fromJson(Map<String, dynamic> json) {
     double _checkNull(dynamic digit) {
-      return digit == null ? 0.0 : digit;
+      return digit == null ? 0.0 : double.parse(digit.toString());
     }
 
     return DashboardStat(
