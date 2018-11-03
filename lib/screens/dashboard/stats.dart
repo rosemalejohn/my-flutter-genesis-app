@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:performancewave/models/employee_stat.dart';
 import 'package:performancewave/store/employee_stat.dart';
-import 'package:performancewave/widgets/line_graph.dart';
+import 'package:performancewave/widgets/avatar.dart';
 import 'package:performancewave/widgets/stat_filter.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -29,7 +30,8 @@ class StatsTabContentState extends State<StatsTabContent> {
         builder: (BuildContext context) {
           return ScopedModelDescendant<EmployeeStatModel>(
             builder: (BuildContext context, child, model) {
-              if (model.employeeStat == null) {
+              EmployeeStat _employeeStat = model.employeeStat;
+              if (_employeeStat == null) {
                 return Center(child: CircularProgressIndicator());
               }
               return ListView(
@@ -40,7 +42,7 @@ class StatsTabContentState extends State<StatsTabContent> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         WaveStatFilter(),
-                        Center(child: Text(model.employeeStat.userAverage.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 70.0))),
+                        Center(child: Text(_employeeStat.userAverage.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 70.0))),
                         Divider(),
                         Row(
                           children: <Widget>[
@@ -49,7 +51,7 @@ class StatsTabContentState extends State<StatsTabContent> {
                                 children: <Widget>[
                                   Text('Team rating', style: TextStyle(color: Color(0xffaaaaaa))),
                                   SizedBox(height: 10.0,),
-                                  Text(model.employeeStat.teamAverage.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w500))
+                                  Text(_employeeStat.teamAverage.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w500))
                                 ],
                               ),
                             ),
@@ -58,7 +60,7 @@ class StatsTabContentState extends State<StatsTabContent> {
                                 children: <Widget>[
                                   Text('Company average', style: TextStyle(color: Color(0xffaaaaaa))),
                                   SizedBox(height: 10.0,),
-                                  Text(model.employeeStat.companyAverage.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w500))
+                                  Text(_employeeStat.companyAverage.toStringAsFixed(1) + '%', style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.w500))
                                 ],
                               ),
                             )
@@ -72,7 +74,7 @@ class StatsTabContentState extends State<StatsTabContent> {
                         Text('TREND', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
                         Container(
                           height: 200.0,
-                          child: SimpleLineChart.withSampleData()
+                          child: _employeeStat.graph
                         )
                       ],
                     ),
@@ -95,28 +97,43 @@ class StatsTabContentState extends State<StatsTabContent> {
                       ),
                       // Relationship
                       WaveStatTitleRow(title: 'RELATIONSHIP'),
-                      WaveStatDetailRow(title: 'Likability'),
-                      WaveStatDetailRow(title: 'Trustworthy'),
+                      WaveStatDetailRow(title: 'Likability', details: _employeeStat.likability),
+                      WaveStatDetailRow(title: 'Trustworthy', details: _employeeStat.trustworthy),
                       // Hard skills
                       WaveStatTitleRow(title: 'HARD SKILLS'),
-                      WaveStatDetailRow(title: 'Business Development'),
-                      WaveStatDetailRow(title: 'Marketing'),
-                      WaveStatDetailRow(title: 'Strategy Development'),
-                      WaveStatDetailRow(title: 'Capital Raising'),
+                      Column(
+                        children: _employeeStat.hardSkills.map((skillStat) {
+                          return WaveStatDetailRow(title: skillStat.title, details: skillStat,);
+                        }).toList()
+                      ),
                       // Soft Skills
                       WaveStatTitleRow(title: 'SOFT SKILLS'),
-                      WaveStatDetailRow(title: 'Communication'),
-                      WaveStatDetailRow(title: 'Resilience'),
-                      WaveStatDetailRow(title: 'Adaptability'),
+                      WaveStatDetailRow(title: 'Communication', details: _employeeStat.communication),
+                      WaveStatDetailRow(title: 'Resilience', details: _employeeStat.resilience),
+                      WaveStatDetailRow(title: 'Adaptability', details: _employeeStat.adaptability),
                       // Purpose
                       WaveStatTitleRow(title: 'PURPOSE'),
-                      WaveStatDetailRow(title: 'Role purpose'),
+                      WaveStatDetailRow(title: 'Role purpose', details: _employeeStat.purpose),
                       // Fit
                       WaveStatTitleRow(title: 'FIT'),
-                      WaveStatDetailRow(title: 'Suitability'),
-                      WaveStatDetailRow(title: 'Ready for promotion'),
+                      WaveStatDetailRow(title: 'Suitability', details: _employeeStat.suitability),
+                      WaveStatDetailRow(title: 'Ready for promotion', details: _employeeStat.promotion),
                       // Reviewers
-                      WaveStatTitleRow(title: 'REVIEWERS'),
+                      WaveStatTitleRow(title: 'REVIEWERS (${_employeeStat.totalReviewers})'),
+                      // Internal reviewers
+                      Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: _employeeStat.internalReviewers.map((reviewer) {
+                                return WaveAvatar(height: 70.0, width: 70.0, url: reviewer.photoUrl);
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
                       Divider(color: Theme.of(context).primaryColor),
                       SizedBox(height: 10.0,)
                     ],
@@ -158,8 +175,33 @@ class WaveStatTitleRow extends StatelessWidget {
 class WaveStatDetailRow extends StatelessWidget {
 
   final String title;
+  final EmployeeStatDetail details;
 
-  WaveStatDetailRow({this.title});
+  WaveStatDetailRow({this.title, @required this.details});
+
+  Color _getDetailColor (BuildContext context, int count) {
+    return count > 0 ? Theme.of(context).primaryColor : Color(0xffA9A9A9);
+  }
+
+  Widget _buildProgress() {
+    if (details.gain > 0) {
+      return Row(
+        children: <Widget>[
+          Icon(Icons.arrow_drop_up, color: Color(0xff346407),),
+          Text(details.gain.toStringAsFixed(1), style: TextStyle(fontSize: 16.0, color: Color(0xff346407))),
+        ],
+      );
+    } else if (details.loss < 0) {
+      return Row(
+        children: <Widget>[
+          Icon(Icons.arrow_drop_down, color: Color(0xffd0011b),),
+          Text(details.gain.toStringAsFixed(1), style: TextStyle(fontSize: 16.0, color: Color(0xffd0011b))),
+        ],
+      );
+    } else {
+      return Container();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,25 +210,26 @@ class WaveStatDetailRow extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(flex: 2, child: Text(title, style: TextStyle(fontSize: 16.0))),
-          Expanded(child: Text('100.0%', style: TextStyle(fontSize: 16.0))),
-          Expanded(child: Text('')),
+          Expanded(child: Text('${details.average.toStringAsFixed(1)}%', style: TextStyle(fontSize: 16.0))),
+          Expanded(
+            child: _buildProgress()
+          ),
           Expanded(
             child: Row(
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   child: Row(
                     children: <Widget>[
-                      Icon(Icons.person, color: Color(0xffA9A9A9),),
-                      Text('8', style: TextStyle(color: Color(0xffA9A9A9), fontSize: 16.0))
+                      Icon(Icons.chat_bubble, color: _getDetailColor(context, details.commentCount)),
+                      Text(details.commentCount.toString(), style: TextStyle(color: _getDetailColor(context, details.commentCount), fontSize: 16.0))
                     ],
                   ),
                 ),
                 Expanded(
                   child: Row(
                     children: <Widget>[
-                      Icon(Icons.grade, color: Theme.of(context).primaryColor),
-                      Text('2', style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16.0))
+                      Icon(Icons.grade, color: _getDetailColor(context, details.awardCount)),
+                      Text(details.awardCount.toString(), style: TextStyle(color: _getDetailColor(context, details.awardCount), fontSize: 16.0))
                     ],
                   ),
                 ),

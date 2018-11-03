@@ -14,7 +14,7 @@ class DoingReviewModel extends Model {
 
   Review get review => _review;
 
-  void getReview(int reviewId) async {
+  Future<void> getReview(int reviewId) async {
     final response = await _http.get('/reviews/' + reviewId.toString());
 
     if (response.statusCode == 200) {

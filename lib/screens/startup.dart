@@ -22,23 +22,25 @@ class Startup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppModel.of(context).initApp()
-      .then((res) {
-        Navigator.pushReplacementNamed(context, '/dashboard');
-      });
+    Future.wait([
+      AppModel.of(context).initApp(),
+      AppModel.of(context).getDashboardStat()
+    ]).then((res) {
+      Navigator.pushReplacementNamed(context, '/dashboard');
+    });
 
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Color(0xff262626),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
             Expanded(child: Container(),),
             Container(
-              height: 100.0,
+              height: 80.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/logo-rounded.png'),
+                  image: AssetImage('assets/images/light-logo.png'),
                 )
               ),
             ),
@@ -48,9 +50,11 @@ class Startup extends StatelessWidget {
               child: Container(
                 height: 20.0,
                 width: 20.0,
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.white,
-                  strokeWidth: 2.0,
+                child: Theme(
+                  data: Theme.of(context).copyWith(accentColor: Colors.white),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
+                  ),
                 ),
               ),
             ),

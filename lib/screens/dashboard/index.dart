@@ -51,17 +51,12 @@ class DashboardState extends State<Dashboard> with SingleTickerProviderStateMixi
         ),
         drawer: MainDrawer(),
         endDrawer: NotificationDrawer(),
-        body: GestureDetector(
-          onPanDown: (DragDownDetails dragDownDetails) {
-            print(dragDownDetails.globalPosition.direction);
-          },
-          child: TabBarView(
-            controller: _tabController,
-            children: <Widget>[
-              ReviewTabContent(),
-              StatsTabContent(),
-            ],
-          ),
+        body: TabBarView(
+          controller: _tabController,
+          children: <Widget>[
+            ReviewTabContent(),
+            StatsTabContent(),
+          ],
         ),
         floatingActionButton: _FloatingActionButton(show: _showFab),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

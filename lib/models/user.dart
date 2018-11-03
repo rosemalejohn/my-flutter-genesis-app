@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class User {
 
@@ -67,7 +66,7 @@ class User {
       email: json['email'],
       personalEmail: json['personal_email'],
       employmentStatus: json['employment_status'],
-      dateJoined: DateTime.parse(json['date_joined']),
+      dateJoined: json['date_joined'] == null ? null : DateTime.parse(json['date_joined']),
       hardSkillIds: json['hard_skills'],
       isExecutive: json['is_executive'],
       linkedin: json['linkedin'],

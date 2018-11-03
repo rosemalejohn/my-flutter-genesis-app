@@ -8,19 +8,81 @@ import 'package:scoped_model/scoped_model.dart';
 
 class ReviewTabContent extends StatelessWidget {
 
-  Future<dynamic> _getReviewList(BuildContext context) async {
+  Future<void> _getReviewList(BuildContext context) async {
     return AppModel.of(context).getReviewList();
   }
 
-  Widget _buildContent(AppModel model) {
+  Widget _buildContent(BuildContext context, AppModel model) {
     if (model.reviews == null) {
       return Center(child: CircularProgressIndicator());
     } else {
-      return ListView.builder(
-        itemCount: model.reviews.length,
-        itemBuilder: (context, index) {
-          return ReviewCard(review: model.reviews[index]);
-        },
+      return Column(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: <BoxShadow>[
+                BoxShadow (
+                  color: Colors.grey,
+                  offset: Offset(0.0, 1.0),
+                  blurRadius: 1.0,
+                ),
+              ], 
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ScopedModelDescendant<AppModel>(
+                builder: (BuildContext context, child, model) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Your Review', style: TextStyle(fontSize: 16.0)),
+                            Text(
+                              model.dashboardStat.user.toString() + '%',
+                              style: TextStyle(
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor
+                              )
+                            )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Team Review', style: TextStyle(fontSize: 16.0)),
+                            Text(
+                              model.dashboardStat.team.toString() + '%',
+                              style: TextStyle(
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor
+                              )
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  );
+                }
+              ),
+            )
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: model.reviews.length,
+              itemBuilder: (context, index) {
+                return ReviewCard(review: model.reviews[index]);
+              },
+            ),
+          ),
+        ],
       );
     }
   }
@@ -35,7 +97,7 @@ class ReviewTabContent extends StatelessWidget {
           onRefresh: () {
             return _getReviewList(context);
           },
-          child: _buildContent(model),
+          child: _buildContent(context, model),
         );
       }
     );

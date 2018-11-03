@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:performancewave/routes.dart';
-import 'package:performancewave/screens/dashboard/index.dart';
 import 'package:performancewave/screens/startup.dart';
 import 'package:performancewave/store/app.dart';
 import 'package:performancewave/styles/theme.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:performancewave/models/dashboard_stat.dart';
 import 'package:performancewave/models/review.dart';
 import 'package:performancewave/models/team.dart';
 import 'package:performancewave/models/user.dart';
@@ -12,6 +13,7 @@ class AppModel extends Model {
   User _authProfile;
   Team _company;
   List<Review> _reviews;
+  DashboardStat _dashboardStat;
 
   AppModel() {
     _http = Api();
@@ -22,6 +24,8 @@ class AppModel extends Model {
   User get authProfile => _authProfile;
 
   Team get company => _company;
+
+  DashboardStat get dashboardStat => _dashboardStat;
 
   List<Review> get reviews => _reviews;
 
@@ -35,7 +39,7 @@ class AppModel extends Model {
     notifyListeners();
   }
 
-  Future<Null> initApp() async {
+  Future<dynamic> initApp() async {
     final response = await _http.get('/performancewave-meta');
 
     if (response.statusCode == 200) {
@@ -45,6 +49,18 @@ class AppModel extends Model {
       setAuthProfile(User.fromJson(_user));
 
       setCompany(Team.fromJson(_team));
+    }
+  }
+
+  Future<dynamic> getDashboardStat() async {
+    try {
+      final response = await _http.get('/reports/dashboard');
+
+      Map<String, dynamic> _stats = response.data['data'];
+
+      _dashboardStat = DashboardStat.fromJson(_stats);
+    } catch (e) {
+      throw e;
     }
   }
 

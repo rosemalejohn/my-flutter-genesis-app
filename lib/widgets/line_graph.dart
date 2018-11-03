@@ -7,31 +7,9 @@ class SimpleLineChart extends StatelessWidget {
 
   SimpleLineChart(this.seriesList, {this.animate});
 
-  /// Creates a [LineChart] with sample data and no transition.
-  factory SimpleLineChart.withSampleData() {
-    return new SimpleLineChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: true,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList, animate: animate);
-  }
-
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
-    final data = [
-      LinearSales(0, 5),
-      LinearSales(1, 25),
-      LinearSales(2, 100),
-      LinearSales(3, 75),
-    ];
-
+  static List<charts.Series<dynamic, dynamic>> createLinearData(List<LinearSales> data) {
     return [
-      new charts.Series<LinearSales, int>(
+      new charts.Series<LinearSales, dynamic>(
         id: 'Sales',
         colorFn: (_, __) => CustomColor.primary,
         // colorFn: (_, __) => Palette,
@@ -41,12 +19,17 @@ class SimpleLineChart extends StatelessWidget {
       )
     ];
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return new charts.LineChart(seriesList, animate: animate);
+  }
+
 }
 
-/// Sample linear data type.
 class LinearSales {
-  final int year;
-  final int sales;
+  final String year;
+  final double sales;
 
   LinearSales(this.year, this.sales);
 }
