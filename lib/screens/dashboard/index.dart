@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:performancewave/screens/dashboard/reviews.dart';
 import 'package:performancewave/screens/dashboard/stats.dart';
+import 'package:performancewave/store/review_setup.dart';
 import 'package:performancewave/widgets/app_drawer.dart';
 import 'package:performancewave/widgets/tabs_app_bar.dart';
 import 'package:performancewave/widgets/notification_drawer.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class Dashboard extends StatefulWidget {
 
@@ -42,24 +44,28 @@ class DashboardState extends State<Dashboard> with SingleTickerProviderStateMixi
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
-        appBar: PerformanceWaveAppBar(
-          tabController: _tabController,
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-        ),
-        drawer: MainDrawer(),
-        endDrawer: NotificationDrawer(),
-        body: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            ReviewTabContent(),
-            StatsTabContent(),
-          ],
-        ),
-        floatingActionButton: _FloatingActionButton(show: _showFab),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      child: ScopedModelDescendant<ReviewSetupModel>(
+        builder: (BuildContext context, child, model) {
+          return Scaffold(
+            appBar: PerformanceWaveAppBar(
+              tabController: _tabController,
+              // Here we take the value from the MyHomePage object that was created by
+              // the App.build method, and use it to set our appbar title.
+              title: Text(widget.title),
+            ),
+            drawer: MainDrawer(),
+            endDrawer: NotificationDrawer(),
+            body: TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                ReviewTabContent(),
+                StatsTabContent(),
+              ],
+            ),
+            floatingActionButton: model.setup != null ? null : _FloatingActionButton(show: _showFab),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          );
+        }
       )
     );
   }

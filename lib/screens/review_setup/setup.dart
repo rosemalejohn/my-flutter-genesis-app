@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:performancewave/models/review.dart';
 import 'package:performancewave/models/user.dart';
 import 'package:performancewave/store/review_setup.dart';
 import 'package:performancewave/widgets/avatar.dart';
@@ -173,28 +174,7 @@ class ReviewSetupViewState extends State<ReviewSetupView> {
                       SizedBox(height: 10.0,),
                       Divider(),
                       SizedBox(height: 10.0),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: WaveButton(
-                              text: 'Approve',
-                              onPressed: () {
-                                
-                              }
-                            ),
-                          ),
-                          SizedBox(width: 10.0),
-                          Expanded(
-                            child: WaveButton(
-                              text: 'Reject',
-                              color: Theme.of(context).errorColor,
-                              onPressed: () {
-                                
-                              }
-                            ),
-                          ),
-                        ],
-                      )
+                      ReviewSetupApproval(review: model.setup)
                     ],
                   );
                 }
@@ -226,5 +206,42 @@ class ReviewSetupViewState extends State<ReviewSetupView> {
         )
       ],
     );
+  }
+}
+
+class ReviewSetupApproval extends StatelessWidget {
+
+  final Review review;
+
+  ReviewSetupApproval({this.review});
+
+  @override
+  Widget build(BuildContext context) {
+    if (review.hasUpdate && !review.approved) {
+      return Row(
+        children: <Widget>[
+          Expanded(
+            child: WaveButton(
+              text: 'Approve',
+              onPressed: () {
+                
+              }
+            ),
+          ),
+          SizedBox(width: 10.0),
+          Expanded(
+            child: WaveButton(
+              text: 'Reject',
+              color: Theme.of(context).errorColor,
+              onPressed: () {
+                
+              }
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Container();
+    }
   }
 }

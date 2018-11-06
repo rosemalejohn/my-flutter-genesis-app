@@ -16,7 +16,7 @@ class RankingModel extends Model {
   List<Review> get rankings => _rankings;
   double get average => _average;
 
-  void getReviewRankings() async {
+  Future<void> getReviewRankings() async {
     final response = await _http.get('/pwave/review-rankings?type=yearly&period=2018&date_from=2018-01-01&date_to=2018-12-31&limit=30&desc=true');
 
     if (response.statusCode == 200) {

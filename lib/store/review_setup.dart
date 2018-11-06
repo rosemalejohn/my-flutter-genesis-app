@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:performancewave/models/direct.dart';
 import 'package:performancewave/models/review.dart';
 import 'package:performancewave/services/api/http.dart';
@@ -19,7 +20,9 @@ class ReviewSetupModel extends Model {
     if (response.statusCode == 200) {
       final json = response.data['data'];
 
-      setup = Review.fromJson(json);
+      if (json != null) {
+        setup = Review.fromJson(json);
+      }
 
       notifyListeners();
     }
@@ -38,5 +41,7 @@ class ReviewSetupModel extends Model {
       notifyListeners();
     }
   }
+
+  static ReviewSetupModel of(BuildContext context) => ScopedModel.of<ReviewSetupModel>(context);
 
 }

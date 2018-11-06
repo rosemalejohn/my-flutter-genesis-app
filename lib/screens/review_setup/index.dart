@@ -16,11 +16,15 @@ class ReviewSetup extends StatelessWidget {
         appBar: AppBar(
           title: Text('Review Setup'),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.notifications),
-              onPressed: () {
-                Scaffold.of(context).openEndDrawer();
-              },
+            Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: Icon(Icons.notifications),
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                );
+              }
             )
           ],
           bottom: TabBar(

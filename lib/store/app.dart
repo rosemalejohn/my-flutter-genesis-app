@@ -39,7 +39,7 @@ class AppModel extends Model {
     notifyListeners();
   }
 
-  Future<dynamic> initApp() async {
+  Future<void> initApp() async {
     final response = await _http.get('/performancewave-meta');
 
     if (response.statusCode == 200) {
@@ -52,7 +52,7 @@ class AppModel extends Model {
     }
   }
 
-  Future<dynamic> getDashboardStat() async {
+  Future<void> getDashboardStat() async {
     try {
       final response = await _http.get('/reports/dashboard');
 
@@ -64,7 +64,7 @@ class AppModel extends Model {
     }
   }
 
-  void getReviewList() async {
+  Future<void> getReviewList() async {
     final response = await _http.get('/reviews');
 
     if (response.statusCode == 200) {

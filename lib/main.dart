@@ -3,6 +3,7 @@ import 'package:performancewave/routes.dart';
 import 'package:performancewave/screens/startup.dart';
 import 'package:performancewave/store/app.dart';
 import 'package:performancewave/store/notification.dart';
+import 'package:performancewave/store/review_setup.dart';
 import 'package:performancewave/styles/theme.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -17,12 +18,15 @@ class MyApp extends StatelessWidget {
       model: model,
       child: ScopedModel<NotificationModel>(
         model: NotificationModel(),
-        child: MaterialApp(
-          title: 'Performance Wave',
-          theme: waveTheme,
-          debugShowCheckedModeBanner: false,
-          home: Startup(),
-          routes: routes(context)
+        child: ScopedModel<ReviewSetupModel>(
+          model: ReviewSetupModel(),
+          child: MaterialApp(
+            title: 'Performance Wave',
+            theme: waveTheme,
+            debugShowCheckedModeBanner: false,
+            home: Startup(),
+            routes: routes(context)
+          ),
         ),
       )
     );

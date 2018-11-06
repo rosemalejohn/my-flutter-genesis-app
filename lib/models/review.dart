@@ -22,6 +22,7 @@ class Review {
   final String deadline;
   final String updatedAt;
   final User teamLeader;
+  final bool hasUpdate;
 
   Review({
     this.id = 0,
@@ -43,7 +44,8 @@ class Review {
     this.internalReviewers,
     this.deadline,
     this.updatedAt,
-    this.teamLeader
+    this.teamLeader,
+    this.hasUpdate
   });
 
   factory Review.fromJson(Map<String, dynamic> json) {
@@ -93,7 +95,8 @@ class Review {
       }).toList(),
       deadline: json['deadline'],
       updatedAt: json['updated_at'],
-      teamLeader: _manager == null ? null : User.fromJson(_manager)
+      teamLeader: _manager == null ? null : User.fromJson(_manager),
+      hasUpdate: json['hasUpdate'] == 1
     );
   }
 }

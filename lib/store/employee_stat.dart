@@ -13,7 +13,7 @@ class EmployeeStatModel extends Model {
 
   EmployeeStat get employeeStat => _employeeStat;
 
-  void getStats() async {
+  Future<void> getStats() async {
     final response = await _http.get('/stats?type=Monthly&period=2018_8');
 
     if (response.statusCode == 200) {

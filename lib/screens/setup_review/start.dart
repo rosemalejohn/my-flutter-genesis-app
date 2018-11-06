@@ -1,15 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:performancewave/store/review_setup.dart';
 import 'package:performancewave/widgets/avatar.dart';
 import 'package:performancewave/widgets/button.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class StartReviewSetup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Review Set-up'),
-      ),
-      body: ListView(
+    return ScopedModelDescendant<ReviewSetupModel>(
+      builder: (BuildContext context, child, model) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Review Set-up'),
+          ),
+          body: Builder(
+            builder: (BuildContext context) {
+              if (model.setup != null && model.setup.approved) {
+                return Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'You already have an ongoing review.',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold
+                          )
+                        ),
+                        SizedBox(height: 20.0,),
+                        WaveButton(
+                          text: 'View setup',
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/review-setup');
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              } else {
+                return previewReview(context);
+              }
+            },
+          )
+        );
+      }
+    );
+  }
+
+  Widget previewReview(BuildContext context) {
+    return Container(
+      child: ListView(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(20.0),
@@ -192,7 +235,8 @@ class StartReviewSetup extends StatelessWidget {
             ),
           )
         ],
-      )
+      ),
     );
+              
   }
 }
